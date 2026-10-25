@@ -3,8 +3,11 @@
 .env*.local
 *.key
 
-# Dependencies
+# Dependencies & Build Artifacts
 node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
 __pycache__/
 *.pyc
 venv/

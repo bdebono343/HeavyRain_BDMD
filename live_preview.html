@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HeavyRain — Constant Live Chrome Preview Monitor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 h-screen flex flex-col overflow-hidden font-sans">
+  <!-- Constant Live Preview Top Control Bar -->
+  <header class="bg-slate-900 border-b border-slate-800 px-4 py-2 flex flex-wrap items-center justify-between gap-3 shrink-0">
+    <div class="flex items-center gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+      <span class="font-bold text-sm tracking-wide text-white">HEAVYRAIN LIVE PREVIEW MONITOR</span>
+      <span id="status-badge" class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+        Connecting to localhost:5173 & :8000...
+      </span>
+    </div>
+
+    <div class="flex items-center gap-1.5">
+      <button onclick="setLayout('single')" id="btn-single" class="px-3 py-1 rounded-lg text-xs font-semibold bg-sky-500 text-slate-950 cursor-pointer">
+        Full Platform View
+      </button>
+      <button onclick="setLayout('dual')" id="btn-dual" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer">
+        Dual-Tab Side-by-Side (Desktop + Agent Brain)
+      </button>
+      <button onclick="setLayout('exec')" id="btn-exec" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-rose-300 hover:bg-slate-700 cursor-pointer">
+        COO / Exec View
+      </button>
+      <button onclick="setLayout('dom')" id="btn-dom" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-emerald-300 hover:bg-slate-700 cursor-pointer">
+        Dom's Backend Contract
+      </button>
+      <a href="http://localhost:5173" target="_blank" class="px-3 py-1 rounded-lg text-xs font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/30">
+        Open Direct localhost:5173 ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Viewport Area -->
+  <main id="viewport-single" class="flex-1 w-full h-full">
+    <iframe id="frame-main" src="http://localhost:5173" class="w-full h-full border-0"></iframe>
+  </main>
+
+  <main id="viewport-dual" class="hidden flex-1 w-full h-full grid grid-cols-12 divide-x divide-slate-800">
+    <div class="col-span-7 h-full flex flex-col">
+      <div class="bg-slate-900/90 px-3 py-1 text-[11px] font-semibold text-sky-300 border-b border-slate-800 flex justify-between">
+        <span>TAB 1: SIMULATED PERSONA DESKTOP WORKSPACE (?tab=workspace)</span>
+        <span>Live BroadcastChannel Sync Active</span>
+      </div>
+      <iframe id="frame-left" src="http://localhost:5173/?tab=workspace" class="w-full flex-1 border-0"></iframe>
+    </div>
+    <div class="col-span-5 h-full flex flex-col">
+      <div class="bg-slate-900/90 px-3 py-1 text-[11px] font-semibold text-emerald-300 border-b border-slate-800 flex justify-between">
+        <span>TAB 2: HEAVYRAIN BACKGROUND AGENT BRAIN (?tab=agent)</span>
+        <span>Real-Time Telemetry Listener</span>
+      </div>
+      <iframe id="frame-right" src="http://localhost:5173/?tab=agent" class="w-full flex-1 border-0"></iframe>
+    </div>
+  </main>
+
+  <script>
+    function setLayout(mode) {
+      const single = document.getElementById('viewport-single');
+      const dual = document.getElementById('viewport-dual');
+      const frameMain = document.getElementById('frame-main');
+
+      ['single', 'dual', 'exec', 'dom'].forEach(k => {
+        const b = document.getElementById('btn-' + k);
+        if (b) {
+          b.className = (k === mode)
+            ? 'px-3 py-1 rounded-lg text-xs font-semibold bg-sky-500 text-slate-950 cursor-pointer'
+            : 'px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer';
+        }
+      });
+
+      if (mode === 'dual') {
+        single.classList.add('hidden');
+        dual.classList.remove('hidden');
+      } else {
+        dual.classList.add('hidden');
+        single.classList.remove('hidden');
+        if (mode === 'single') frameMain.src = 'http://localhost:5173/?tab=split';
+        if (mode === 'exec') frameMain.src = 'http://localhost:5173/?tab=exec';
+        if (mode === 'dom') frameMain.src = 'http://localhost:5173/?tab=dom';
+      }
+    }
+
+    async function checkBackend() {
+      const badge = document.getElementById('status-badge');
+      try {
+        const res = await fetch('http://127.0.0.1:8000/api/health');
+        const data = await res.json();
+        badge.textContent = `● Live: FastAPI (:8000) + Vite (:5173) | Model: ${data.model}`;
+        badge.className = 'text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+      } catch (e) {
+        badge.textContent = 'Reconnecting to local backend (:8000)...';
+        badge.className = 'text-xs px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30';
+      }
+    }
+    checkBackend();
+    setInterval(checkBackend, 4000);
+  </script>
+</body>
+</html>

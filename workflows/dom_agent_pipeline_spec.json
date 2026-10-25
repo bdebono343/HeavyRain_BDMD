@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "spec_version": "1.2.0",
+  "system_name": "HeavyRain Autonomous Workflow Agent Pipeline",
+  "organization": "Meridian Crest Capital",
+  "model_engine": {
+    "provider": "google-genai",
+    "default_model": "gemini-4-argon",
+    "interaction_api": "client.interactions.create",
+    "env_variable": "GEMINI_API_KEY",
+    "deterministic_fallback_enabled": true
+  },
+  "live_servers": {
+    "fastapi_backend": "http://127.0.0.1:8000",
+    "vite_frontend": "http://localhost:5173",
+    "standalone_html_preview": "live_preview.html",
+    "dual_tab_sync_channel": "heavyrain_demo_sync"
+  },
+  "pipeline_stages": [
+    {
+      "stage_id": "stage_1_passive_observation",
+      "name": "OS / Browser / AI-Silo Passive Collector",
+      "owner": "Dom (Daemon Collector) -> FastAPI Backend",
+      "endpoint": "POST /api/observe",
+      "backend_handler": "backend.app.ingest_observation_event",
+      "description": "Streams real-time window titles, Outlook calendar triggers, Granola call completions, clipboard transfers, and disconnected AI tab usage (Claude, Gemini) into the HeavyRain event buffer.",
+      "input_schema": {
+        "persona_id": "string ('marcus' | 'elena' | 'devon' | 'priya' | 'claire')",
+        "app_name": "string (e.g., 'Outlook Calendar', 'Claude 3.7 Web (Skill)', 'Granola Call Recorder', 'Excel')",
+        "window_title": "string",
+        "action_type": "string ('TRIGGER_DETECTED' | 'DISCONNECTED_AI_SILO' | 'HUMAN_GLUE_HANDOFF' | 'WORKFLOW_STEP')",
+        "content_snippet": "string (redacted/governed metadata preview)",
+        "used_ai_tool": "boolean"
+      },
+      "output_schema": {
+        "status": "string ('captured')",
+        "event": {
+          "id": "string",
+          "timestamp": "string (HH:MM:SS AM/PM)",
+          "persona_id": "string",
+          "app_name": "string",
+          "window_title": "string",
+          "action_type": "string",
+          "content_snippet": "string",
+          "used_ai_tool": "boolean"
+        },
+        "total_buffered_events": "integer"
+      }
+    },
+    {
+      "stage_id": "stage_2_weekly_subtask_synthesis",
+      "name": "Subtask Graph Clustering & Weekly Autonomous MVP Builder",
+      "owner": "Dom (Workflow Graph Synthesizer) -> Gemini 4 Argon",
+      "endpoint": "POST /api/synthesize-weekly",
+      "backend_handler": "backend.agent_engine.HeavyRainAgentEngine.synthesize_weekly_workflow",
+      "description": "Analyzes a week of fragmented desktop subtasks, pinpoints where the user is acting as 'Human Glue' between existing AI tools, and compiles a cohesive Week 1 Beta MVP manifest.",
+      "input_schema": {
+        "persona_id": "string",
+        "custom_workflow_logs": "array<string> | null",
+        "use_live_gemini": "boolean (default: true)"
+      },
+      "output_schema": {
+        "persona_id": "string",
+        "persona_name": "string",
+        "model_used": "string ('gemini-4-argon')",
+        "live_gemini_active": "boolean",
+        "human_glue_steps_detected": "integer",
+        "disconnected_ai_silos_detected": "integer",
+        "weekly_hours_recovered": "number",
+        "built_mvp": {
+          "mvp_id": "string",
+          "name": "string",
+          "version": "string",
+          "tagline": "string",
+          "status": "string ('beta_ready' | 'iterating_v1_2' | 'org_shared')",
+          "hours_saved_per_week": "number",
+          "annual_dollar_value": "integer",
+          "security_tier": "string",
+          "replaces_steps": "array<string>",
+          "architecture_summary": "string",
+          "weekly_agent_pitch": "string"
+        },
+        "agent_synthesis_narrative": "string (3-bullet Gemini 4 Argon executive synthesis)",
+        "dom_pipeline_hook": {
+          "module": "string",
+          "input_stream": "string",
+          "output_artifact": "string"
+        }
+      }
+    },
+    {
+      "stage_id": "stage_3_cross_org_deduplication",
+      "name": "Firm-Wide Workflow DNA Deduplication & Module Forking Engine",
+      "owner": "Dom (Org Graph Matcher) -> Gemini 4 Argon",
+      "endpoint": "POST /api/org-dedup",
+      "backend_handler": "backend.agent_engine.HeavyRainAgentEngine.check_org_deduplication",
+      "description": "Compares a persona's subtask graph against all active MVPs in the Meridian Crest Capital registry to prevent duplicate engineering and recommend shared firm cores + custom delta adapters.",
+      "verified_org_matches": [
+        {
+          "match_id": "dedup_marcus_elena",
+          "source_persona": "elena (Principal, Growth & Customer Discovery)",
+          "target_persona": "marcus (VP, Deal Sourcing)",
+          "overlap_score_pct": 68,
+          "shared_core_mvp": "DealPulse AutoBrief & Post-Call Loop (mvp_marcus_01)",
+          "shared_subtasks": [
+            "Calendar 15-Min Trigger",
+            "Granola Transcript Ingestion",
+            "Gemini Structured JSON Extraction"
+          ],
+          "custom_delta_adapter": "Multi-Call Thesis Validation Matrix (Excel Sync) vs. Single-Deal Affinity CRM Note",
+          "estimated_build_hours_saved": 28
+        },
+        {
+          "match_id": "dedup_devon_priya",
+          "source_persona": "priya (VP, Investor Relations)",
+          "target_persona": "devon (Sr. Associate, Financial Diligence)",
+          "overlap_score_pct": 62,
+          "shared_core_mvp": "CIM-to-IC Model Bridge (mvp_devon_01)",
+          "shared_subtasks": [
+            "Verified Portfolio KPI Table Reader",
+            "Audit Citation Footnote Generator",
+            "SOC2-Governed Gemini Drafting"
+          ],
+          "custom_delta_adapter": "LP Instant Response Outlook Drawer + CalSTRS Tone Formatter",
+          "estimated_build_hours_saved": 22
+        }
+      ],
+      "input_schema": {
+        "persona_id": "string",
+        "proposed_workflow_summary": "string",
+        "use_live_gemini": "boolean (default: true)"
+      },
+      "output_schema": {
+        "persona_id": "string",
+        "dedup_match": "OrgDedupMatch | null",
+        "live_gemini_dedup_rationale": "string"
+      }
+    },
+    {
+      "stage_id": "stage_4_weekly_beta_telemetry_mutation",
+      "name": "User-as-Beta-Tester Telemetry & Self-Evolving App Loop (Week 1 -> Week 2)",
+      "owner": "Dom (Beta Telemetry Mutator) -> Gemini 4 Argon",
+      "endpoint": "POST /api/telemetry-iterate",
+      "backend_handler": "backend.agent_engine.HeavyRainAgentEngine.iterate_from_beta_telemetry",
+      "description": "Observes how the investor interacts with their Week 1 Beta MVP (which widgets they adopt, ignore, or manually override) and automatically mutates the UI, schema, and prompts for Week 2.",
+      "input_schema": {
+        "persona_id": "string",
+        "mvp_id": "string",
+        "user_feedback_or_telemetry": "string",
+        "use_live_gemini": "boolean (default: true)"
+      },
+      "output_schema": {
+        "persona_id": "string",
+        "mvp_id": "string",
+        "next_version": "string ('v1.3-beta (Auto-Mutated)')",
+        "week1_to_week2_diff_summary": "string",
+        "live_gemini_mutation_spec": "string (Pruned UI, Auto-Added Feature, Updated Gemini Prompt)",
+        "telemetry_breakdown": "array<BetaTelemetryItem>"
+      }
+    }
+  ]
+}
