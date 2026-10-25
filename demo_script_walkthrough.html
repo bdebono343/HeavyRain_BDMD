@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Heavy Rain × Talos — Interactive Demo Script & Screen Walkthrough (You + Dom)</title>
+  <title>Heavy Rain — Post-Dom Sync Demo Script & Framework Walkthrough</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -19,7 +19,6 @@
     .augi-card {
       background: radial-gradient(circle at 60% 30%, rgba(16, 185, 129, 0.16), rgba(9, 13, 22, 0.95) 75%);
     }
-    /* Custom scrollbar */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #090d16; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
@@ -29,7 +28,7 @@
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-sky-500/30 selection:text-sky-200">
 
   <!-- TOP STICKY HEADER: TITLE, REHEARSAL TIMER & VIEW CONTROLS -->
-  <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-6 py-3.5">
+  <header class="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/80 px-6 py-3.5">
     <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-4">
       <!-- Brand & Repo Links -->
       <div class="flex items-center gap-3.5">
@@ -38,13 +37,13 @@
         </div>
         <div>
           <div class="flex items-center gap-2.5">
-            <h1 class="font-bold text-base tracking-tight text-white">Heavy Rain × Talos — Live Stage Script & Screen Synchronizer</h1>
-            <span class="text-[11px] font-mono uppercase px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-300 border border-sky-500/30">5:00 Pitch Arc</span>
+            <h1 class="font-bold text-base tracking-tight text-white">Heavy Rain — Hackathon Pitch Script & Screen Synchronizer (Post-Dom Sync)</h1>
+            <span class="text-[11px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Prove Idea • Why Now • Prove It Works</span>
           </div>
           <div class="flex items-center gap-3 text-xs text-slate-400 mt-0.5">
             <span>Part 1: <a href="https://github.com/bdebono343/HeavyRain_BDMD.git" target="_blank" class="text-sky-400 hover:underline font-mono">HeavyRain_BDMD</a> (Marcus & Personas)</span>
             <span>•</span>
-            <span>Part 2: <a href="https://github.com/dominicphillips/argon-hackathon-heavy-rain.git" target="_blank" class="text-emerald-400 hover:underline font-mono">argon-hackathon-heavy-rain</a> (Dom's Platform, Rookmere & AUGI 3D)</span>
+            <span>Part 2: <a href="https://github.com/dominicphillips/argon-hackathon-heavy-rain.git" target="_blank" class="text-emerald-400 hover:underline font-mono">argon-hackathon-heavy-rain</a> (Dom's Argon Sandbox, Rookmere & AUGI 3D)</span>
           </div>
         </div>
       </div>
@@ -66,52 +65,61 @@
         <!-- Step-by-Step vs Full Scroll Toggle -->
         <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800">
           <button onclick="setDisplayMode('step')" id="mode-step" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500 text-slate-950 transition cursor-pointer">
-            Act-by-Act Walkthrough
+            Beat-by-Beat Walkthrough
           </button>
           <button onclick="setDisplayMode('all')" id="mode-all" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white transition cursor-pointer">
-            Full Script (All 5 Acts)
+            Full Script (All 5 Beats)
           </button>
           <button onclick="toggleAlignmentDrawer()" class="px-3 py-1.5 rounded-lg text-xs font-medium text-amber-300 hover:bg-amber-500/10 transition cursor-pointer flex items-center gap-1">
-            <span>⚡ Dom Alignment Checklist</span>
+            <span>🎯 Hackathon Framework & Notes</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- 5-ACT TIMELINE SCRUBBER BAR -->
+    <!-- 5-BEAT TIMELINE SCRUBBER BAR -->
     <div class="max-w-[1600px] mx-auto mt-3 pt-2.5 border-t border-slate-900 grid grid-cols-5 gap-2" id="act-tabs-bar">
       <!-- Populated by JS -->
     </div>
   </header>
 
-  <!-- COLLAPSIBLE DOM ALIGNMENT & DECISIONS DRAWER -->
-  <section id="alignment-drawer" class="hidden bg-amber-950/20 border-b border-amber-500/30 px-6 py-4">
+  <!-- NORTH STAR FRAMEWORK DRAWER (VISIBLE BY DEFAULT SO YOU & DOM SEE THE CALL NOTES MAPPED OUT) -->
+  <section id="alignment-drawer" class="bg-slate-900/70 border-b border-slate-800 px-6 py-4">
     <div class="max-w-[1600px] mx-auto">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
-          <span class="text-xs font-mono uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">Sync Decisions with Dom</span>
-          <h2 class="text-sm font-bold text-white">3 Quick Handoff Decisions to Confirm Together</h2>
+          <span class="text-xs font-mono uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">Hackathon North Star Framework (From Dom Call Notes)</span>
+          <h2 class="text-sm font-bold text-white">Prove the Idea • Why Now • What Our Platform Does • Prove It Works</h2>
         </div>
-        <button onclick="toggleAlignmentDrawer()" class="text-xs text-slate-400 hover:text-white cursor-pointer">✕ Close</button>
+        <button onclick="toggleAlignmentDrawer()" class="text-xs text-slate-400 hover:text-white cursor-pointer">Hide Banner ▲</button>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
-          <div class="font-semibold text-amber-300 mb-1">1. Terminology Bridge (Talos vs. Cairn / Heavy Rain)</div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3.5 text-xs">
+        <div class="bg-slate-950/90 border border-sky-500/30 rounded-xl p-3.5">
+          <div class="font-bold text-sky-300 mb-1">1. THE PROBLEM ("Era of Personal SaaS")</div>
           <p class="text-slate-300 leading-relaxed">
-            We introduce <strong>Heavy Rain</strong> as the overarching platform and refer to the intelligent agentic harness/orchestrator as <strong>"Talos"</strong> (labeled <code class="text-emerald-300">Cairn</code> in Dom's console UI and fed by <code class="text-sky-300">Relay</code> intake).
+            • <strong>Sam Altman's "Era of Personal SaaS" & Dot-Com Analogy:</strong> In 1998 every business needed a website; today every worker needs custom workflow software.<br/>
+            • People are great at their jobs, <strong>not software engineers</strong>. And you can't hire 1 human dev per employee—that never scales.
           </p>
         </div>
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
-          <div class="font-semibold text-amber-300 mb-1">2. Single Screen Switch vs. Two Switches</div>
+        <div class="bg-slate-950/90 border border-emerald-500/30 rounded-xl p-3.5">
+          <div class="font-bold text-emerald-300 mb-1">2. WHY NOW? (Clicks → Written Thoughts)</div>
           <p class="text-slate-300 leading-relaxed">
-            <strong>Option A (1 Switch):</strong> You show Acts 1–2 + Marcus's Team Dedup on <code class="text-sky-300">:5173</code> first, then hand to Dom for Act 3 (Console <code class="text-emerald-300">:43170</code>), Act 4 (<code class="text-emerald-300">Rookmere :43173</code>), and Act 5 (<code class="text-emerald-300">AUGI 3D :43171</code>).<br/>
-            <strong>Option B (Narrative Order):</strong> Follow Acts 1 → 5 below and either Picture-in-Picture or toggle tabs.
+            • <strong>Old Paradigm:</strong> "System supervisor" tools tracked mouse clicks in rigid SaaS apps (clicks don't show intent).<br/>
+            • <strong>New Paradigm:</strong> Work shifted to <strong>Claude, ChatGPT & Gemini</strong>—employees now <strong>write down their exact thought process</strong>, logic, and schemas!
           </p>
         </div>
-        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
-          <div class="font-semibold text-amber-300 mb-1">3. Core Thesis to Hammer Home</div>
+        <div class="bg-slate-950/90 border border-indigo-500/30 rounded-xl p-3.5">
+          <div class="font-bold text-indigo-300 mb-1">3. WHY BETTER THAN "VIBE CODING"?</div>
           <p class="text-slate-300 leading-relaxed">
-            ① Workers don't realize their "human glue" loop is a software candidate. ② They are domain-technical, not software engineers. ③ <strong>No AI Slop:</strong> Talos dynamically picks the right modality (a financial bridge for Marcus/Devon vs. a <strong>3D WebGL studio</strong> for AUGI).
+            • DIY vibe-coding produces brittle <strong>AI slop</strong> without API keys, DB connectors, or UI/security standards.<br/>
+            • <strong>Personal Autonomous Software Engineer:</strong> <strong>Gemini 4 Argon</strong> in an Antigravity Sandbox has <em>better context than any single employee</em> (org schemas, APIs, catalog reuse, UI rules).
+          </p>
+        </div>
+        <div class="bg-slate-950/90 border border-amber-500/30 rounded-xl p-3.5">
+          <div class="font-bold text-amber-300 mb-1">4. PROVE IT WORKS (High-Value Apps)</div>
+          <p class="text-slate-300 leading-relaxed">
+            • <strong>High-Value Partner ROI:</strong> Saving a PE Partner/Principal 1 hr/wk = tens of thousands in value (<strong>Marcus DealPulse & Rookmere Close</strong>).<br/>
+            • <strong>Zero Slop Modality:</strong> Dynamically builds a real <strong>3D WebGL engineering studio</strong> for <strong>AUGI</strong> chassis engineers.
           </p>
         </div>
       </div>
@@ -128,7 +136,7 @@
     <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center gap-4">
         <span class="font-semibold text-slate-200">Keyboard Shortcuts:</span>
-        <span><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[11px] font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[11px] font-mono">→</kbd> Previous / Next Act</span>
+        <span><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[11px] font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[11px] font-mono">→</kbd> Previous / Next Beat</span>
         <span><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[11px] font-mono">Space</kbd> Start / Pause 5:00 Timer</span>
       </div>
       <div class="flex items-center gap-4 font-mono text-[11px]">
@@ -142,110 +150,101 @@
 
   <script>
     // ============================================================================
-    // COMPLETE 5-ACT SCRIPT + ON-SCREEN STATE DATA
+    // REVISED 5-BEAT SCRIPT (POST-DOM SYNC FRAMEWORK)
     // ============================================================================
     const ACTS = [
       {
         id: 'act1',
-        number: 'ACT 1',
-        title: 'The Modern Work Problem ("Human Glue")',
-        timeRange: '0:00 – 0:50',
-        durationSec: 50,
+        number: 'BEAT 1',
+        title: 'The Problem & "Why Now" (Clicks → Thought Process)',
+        timeRange: '0:00 – 1:05',
+        durationSec: 65,
         speaker: 'YOU',
         speakerColor: 'sky',
         repoLabel: 'HeavyRain_BDMD (localhost:5173)',
         screenTab: '1. Before HeavyRain (Animated Workflow)',
-        corePillar: 'Pillar #1: Workers execute repetitive cross-app workflows every week without ever realizing or appreciating that what they do is a prime candidate for custom application software.',
+        corePillar: 'FRAMEWORK [THE PROBLEM & WHY NOW]: Sam Altman’s "Era of Personal SaaS" & the Dot-Com Era analogy. Workers are great at their jobs, not software engineers, and we can’t hire 1 dev per person. Why is this possible NOW? Because work shifted from clicking buttons in rigid tools to writing down our actual thought process in Claude, ChatGPT & Gemini.',
         talkTrack: [
           {
-            cue: '0:00 — Open on the animated desktop workflow running live behind you',
-            text: `"Every week, knowledge workers across finance, operations, and engineering execute hundreds of complex, high-stakes workflows. And here is the fundamental problem: the people doing the work have no idea that what they are doing is a prime candidate for custom software."`
+            cue: '0:00 — Open with Sam Altman’s "Era of Personal SaaS" & the Dot-Com Website Analogy',
+            text: `"Sam Altman recently said we are entering the 'Era of Personal SaaS'—a world where software is tailored to the exact workflows of individuals and teams. Think back to the Dot-Com era: every company suddenly needed a website, and people were great at running their business, not hand-coding HTML. Today, we have the exact same bottleneck with internal software: people are deeply technical at their actual jobs, but they aren't software engineers. And you obviously can't hire a dedicated human software engineer to sit next to every single employee—that will never scale."`
           },
           {
-            cue: '0:18 — Point to the window morphing between Outlook, CRM, Claude, Granola, and Gemini',
-            text: `"Why? Because to them, it just feels like 'doing their job.' Even worse—everyone on these teams already uses AI. They have Claude skills, Gemini, ChatGPT Enterprise, and Granola call recorders. Look at the animation on screen right now: modern workers aren't failing to adopt AI—they are trapped acting as the 'human copy-paste glue' between disconnected AI silos and legacy tabs."`
+            cue: '0:28 — Explain "Why Now?" (From Tracking Clicks → Capturing Written Thought Processes)',
+            text: `"So why hasn't autonomous workflow software worked before, and why is it suddenly possible right now? Two massive shifts just converged:\n\nFirst, work has shifted from clicking buttons inside rigid, purpose-built SaaS tools to reasoning inside Claude, ChatGPT, and Gemini. Under the old paradigm, 'system supervisor' tools had to track mouse clicks—and clicks only tell you where someone clicked, never why. Today, as workers prompt AI assistants across their workflow, they are literally writing down their entire thought process, business logic, and intent in plain English."`
           },
           {
-            cue: '0:38 — Land the problem statement',
-            text: `"They don't have the time, the product management lens, or the engineering background to step back and say, 'Wait—I just did this exact 7-step loop 14 times this week; someone should build an enterprise app for this.' And even if they did, IT backlogs mean it would never get built."`
+            cue: '0:50 — Introduce the Personal Autonomous Software Engineer',
+            text: `"Second, with Gemini 4 Argon running inside autonomous sandboxes, we don't just suggest another prompt—we give every employee a Personal Autonomous Software Engineer that turns their written thought process into sustainable, enterprise-grade applications."`
           }
         ],
         clickCues: [
-          'Have http://localhost:5173 open on Marcus Vance ("VP, Deal Sourcing & Screening").',
-          'Ensure top nav tab "1. Before HeavyRain (Animated Workflow)" is active.',
-          'Click "Auto-Play Animated Story" so the desktop window morphs every 2.6 seconds across Steps 1 → 7 while you speak.'
+          'Start on http://localhost:5173 with Marcus Vance selected on "1. Before HeavyRain (Animated Workflow)".',
+          'Click "Auto-Play Animated Story" so the audience sees the worker jumping between Outlook, CRM, Claude, Granola, and Gemini while writing down their thought process in AI prompts.'
         ],
         screenMockupHtml: `
           <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
-            <!-- Simulated Browser Bar -->
             <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                <span class="ml-2 text-xs font-mono text-slate-400">http://localhost:5173 — 1. Before HeavyRain (Animated Workflow)</span>
+                <span class="ml-2 text-xs font-mono text-slate-400">http://localhost:5173 — The Paradigm Shift in Modern Work</span>
               </div>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">▶ Auto-Play Active</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">Why Now: Clicks → Written Thoughts</span>
             </div>
 
             <div class="p-5 space-y-4">
-              <!-- Alert Banner -->
-              <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <span class="text-amber-400 font-bold text-xs uppercase font-mono">🔔 TRIGGER</span>
-                  <span class="text-xs text-amber-100 font-medium">Outlook Reminder: "Intro Call: VeloceAI (Series B)" starts in 15 minutes</span>
+              <!-- Old vs New Paradigm Comparison -->
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div class="bg-slate-950/90 border border-rose-500/30 rounded-xl p-3">
+                  <div class="font-mono text-[10px] uppercase text-rose-400">❌ BEFORE: Click-Tracking / RPA</div>
+                  <div class="font-bold text-white mt-0.5">Rigid Purpose-Built SaaS</div>
+                  <p class="text-slate-400 mt-1 leading-relaxed">Tracked low-level mouse clicks & window coordinates. Never knew the worker's actual reasoning or domain rules.</p>
                 </div>
-                <span class="text-[11px] font-mono text-amber-300">14x / week</span>
+                <div class="bg-slate-950/90 border-2 border-emerald-500/50 rounded-xl p-3">
+                  <div class="font-mono text-[10px] uppercase text-emerald-400">✓ NOW: Written Thought Process</div>
+                  <div class="font-bold text-white mt-0.5">Claude • ChatGPT • Gemini</div>
+                  <p class="text-slate-300 mt-1 leading-relaxed">Employees write down their exact thought process, formulas, and schemas in prompts—giving an autonomous SWE everything it needs!</p>
+                </div>
               </div>
 
               <!-- Animated 7-Step Human Glue Loop -->
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-4">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-bold uppercase tracking-wider text-slate-400">The "Human Copy-Paste Glue" Loop (42 Mins / Call)</span>
-                  <span class="text-xs font-mono text-rose-400">3 Disconnected AIs • 5 Manual Copy-Pastes</span>
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5">
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Live Animation on Screen: Marcus's 7-Step Loop</span>
+                  <span class="text-xs font-mono text-sky-400">Personal Autonomous SWE Observing</span>
                 </div>
                 <div class="grid grid-cols-7 gap-1.5 text-center">
                   <div class="bg-slate-900 border border-slate-700 rounded-lg p-2">
                     <div class="text-[10px] font-mono text-slate-400">Step 1</div>
                     <div class="text-xs font-bold text-white mt-0.5">Outlook</div>
-                    <div class="text-[10px] text-amber-400 mt-1">15m Panic</div>
                   </div>
                   <div class="bg-slate-900 border border-slate-700 rounded-lg p-2">
                     <div class="text-[10px] font-mono text-slate-400">Step 2</div>
-                    <div class="text-xs font-bold text-white mt-0.5">Affinity CRM</div>
-                    <div class="text-[10px] text-rose-400 mt-1">Dig Notes</div>
+                    <div class="text-xs font-bold text-white mt-0.5">Affinity</div>
                   </div>
                   <div class="bg-slate-900 border border-slate-700 rounded-lg p-2">
                     <div class="text-[10px] font-mono text-slate-400">Step 3</div>
-                    <div class="text-xs font-bold text-white mt-0.5">Google News</div>
-                    <div class="text-[10px] text-rose-400 mt-1">Copy Clips</div>
+                    <div class="text-xs font-bold text-white mt-0.5">News</div>
                   </div>
                   <div class="bg-indigo-950/60 border border-indigo-500/50 rounded-lg p-2">
-                    <div class="text-[10px] font-mono text-indigo-300">Step 4 (AI #1)</div>
-                    <div class="text-xs font-bold text-white mt-0.5">Claude 3.7</div>
-                    <div class="text-[10px] text-indigo-300 mt-1">Manual Paste</div>
+                    <div class="text-[10px] font-mono text-indigo-300">Thought #1</div>
+                    <div class="text-xs font-bold text-white mt-0.5">Claude</div>
                   </div>
                   <div class="bg-emerald-950/50 border border-emerald-500/40 rounded-lg p-2">
-                    <div class="text-[10px] font-mono text-emerald-300">Step 5 (AI #2)</div>
+                    <div class="text-[10px] font-mono text-emerald-300">Thought #2</div>
                     <div class="text-xs font-bold text-white mt-0.5">Granola</div>
-                    <div class="text-[10px] text-emerald-300 mt-1">Silo Audio</div>
                   </div>
                   <div class="bg-sky-950/60 border border-sky-500/50 rounded-lg p-2">
-                    <div class="text-[10px] font-mono text-sky-300">Step 6 (AI #3)</div>
+                    <div class="text-[10px] font-mono text-sky-300">Thought #3</div>
                     <div class="text-xs font-bold text-white mt-0.5">Gemini 4</div>
-                    <div class="text-[10px] text-sky-300 mt-1">Re-Prompt</div>
                   </div>
                   <div class="bg-slate-900 border border-slate-700 rounded-lg p-2">
                     <div class="text-[10px] font-mono text-slate-400">Step 7</div>
-                    <div class="text-xs font-bold text-white mt-0.5">Email & CRM</div>
-                    <div class="text-[10px] text-rose-400 mt-1">6 Fields</div>
+                    <div class="text-xs font-bold text-white mt-0.5">IC Email</div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Key Audience Takeaway Box -->
-              <div class="bg-sky-500/10 border border-sky-500/30 rounded-xl p-3 text-xs text-sky-100">
-                <strong>What Audience Sees:</strong> Workers aren't ignoring AI—they're using 3 different AI tools inside a single 45-minute meeting, yet still spending <strong>78% of their prep/follow-up time manually shuttling context</strong> between windows.
               </div>
             </div>
           </div>
@@ -253,99 +252,80 @@
       },
       {
         id: 'act2',
-        number: 'ACT 2',
-        title: 'Marcus Vance & Why He Needs Talos (Signal vs. Noise)',
-        timeRange: '0:50 – 1:55',
-        durationSec: 65,
+        number: 'BEAT 2',
+        title: 'What Can We Fix? Partner ROI & Why Platform > Vibe-Coding',
+        timeRange: '1:05 – 2:05',
+        durationSec: 60,
         speaker: 'YOU',
         speakerColor: 'sky',
         repoLabel: 'HeavyRain_BDMD (localhost:5173)',
         screenTab: 'Marcus Profile → 🛡️ Signal vs. Noise & Stack-Ranker',
-        corePillar: 'Pillar #2: Marcus is deeply technical at his role (finance/investing), not at software engineering. He needs Talos—an agentic harness that grabs context from completed workflows, filters personal noise on-device, categorizes & ranks them, and initiates an enterprise build.',
+        corePillar: 'FRAMEWORK [WHAT CAN WE FIX & WHY NOT VIBE-CODE?]: Quantify high-value Partner ROI (saving an investment partner 1 hour/wk = massive dollar value). Explain why workers don’t just "vibe-code" it themselves: DIY vibe-coding creates insecure AI slop without API keys, connections, or org context.',
         talkTrack: [
           {
-            cue: '0:50 — Highlight Marcus Vance’s persona & "Domain-Technical vs. Tech-Technical"',
-            text: `"Take Marcus Vance here. Marcus is a VP of Deal Sourcing at a $1.8B growth equity firm. Now, Marcus is deeply technical at his role—he can tear apart an ARR retention bridge, interrogate SaaS gross margins, and structure a Series B term sheet in his sleep. But he is not a software engineer. He isn't going to wire up Outlook webhooks, write React frontends, or configure enterprise OAuth."`
+            cue: '1:05 — Quantify the High-Value Partner Problem with Marcus Vance',
+            text: `"To see why this is such a high-value problem to solve, look at Marcus Vance—a Partner and VP of Deal Sourcing at a $1.8B private equity firm. Think about the economics of Marcus's time: if you save an investment partner or principal even one hour a week, that is worth tens of thousands of dollars in deal velocity and fund economics. Right now, Marcus wastes 42 minutes before and after every single founder call—14 times a week—acting as the human copy-paste glue between Outlook, Affinity CRM, Claude, Granola, and Gemini."`
           },
           {
-            cue: '1:12 — Walk through Marcus’s VeloceAI scramble & introduce Talos',
-            text: `"15 minutes before his intro call with VeloceAI, Marcus scrambles across Affinity CRM, old emails, and Google News, pastes snippets into a Claude skill, records on Granola, exports 6,400 words into Gemini to format a Deal Note, and pastes it into Outlook and Slack. Three separate AI tools—and he still wastes 42 minutes per call doing 5 manual copy-paste handoffs. Marcus doesn't need another chatbot. He needs Talos—our agentic harness powering the Heavy Rain platform."`
+            cue: '1:28 — Address the Elephant in the Room: "Why doesn’t Marcus just vibe-code an app himself?"',
+            text: `"Now, a natural question is: 'Why doesn't Marcus just vibe-code an app himself?'\n1. First, Marcus is heads-down evaluating deals—he doesn't even stop to realize his weekly routine should be an app.\n2. Second, even when someone tries to vibe-code a tool in chat, they get disposable AI slop. It doesn't have the firm's API keys, database connectors, SSO permissions, or UI best practices—and it breaks the next week."`
           },
           {
-            cue: '1:32 — Click 🛡️ Signal vs. Noise & Stack-Ranker tab & hand off to Dom',
-            text: `"Instead of waiting for Marcus to write a software spec, Talos grabs context from the workflows he completes and runs our Dual-Mandate Stack-Ranker along two axes: Individual User Relevance and Org-Wide Impact:`
-          },
-          {
-            cue: '1:42 — Rapid-fire the 4 Tiers on screen',
-            text: `• Texting his fiancée and browsing Airbnb for his honeymoon? 0% work relevance—auto-purged in local RAM on-device.\n• Morning sports scores or X drama? 8%—ignored as routine noise.\n• Spotting an AI funding round on TechCrunch and flagging it to CRM? 78% User Relevance, 34% Org Impact—Talos builds a lightweight personal 1-click clipper just for Marcus.\n• But Marcus's 15-minute Pre/Post-Call Loop? 98% User Relevance and 95% Org Impact. Talos packages the verified workflow context and sends it to our coordination engine. Dom, show them what happens when Talos takes over."`
+            cue: '1:45 — Click 🛡️ Signal vs. Noise & Stack-Ranker & hand off to Dom',
+            text: `"That's the magic of Heavy Rain: our autonomous system has better context than any single employee. On-device, it filters out personal noise—like Marcus texting his fiancée about Airbnb honeymoon villas (0%—auto-purged) or reading sports scores (8%—ignored)—and captures the high-value thought process + workflow context (98% score) to hand off to our autonomous Argon builder. Dom, show them how the platform turns those thoughts into real software."`
           }
         ],
         clickCues: [
-          'Point briefly to Marcus’s "Live Background Telemetry Stream (/api/observe)" on the right.',
-          'At 1:30, click the "🛡️ Signal vs. Noise & Stack-Ranker" button in the top navigation bar.',
-          'Highlight the 4 tiers (Tier 1 Honeymoon Auto-Purged → Tier 4 Promoted to Firm-Wide MVP) as you hand the mic to Dom.'
+          'Point to Marcus Vance’s 9.2 hrs/wk saved ($69k/yr single-user value; $274k/yr across the 5-person pod).',
+          'Click "🛡️ Signal vs. Noise & Stack-Ranker" in the top nav bar.',
+          'Contrast Tier 1/2 (Personal life & noise filtered out) with Tier 4 (High-ROI partner workflow promoted to Argon Sandbox Build) and hand off to Dom.'
         ],
         screenMockupHtml: `
           <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
             <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                <span class="ml-2 text-xs font-mono text-slate-400">http://localhost:5173 — 🛡️ Signal vs. Noise & Dual-Mandate Stack-Ranker</span>
-              </div>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">On-Device Privacy Shield Active</span>
+              <span class="text-xs font-mono text-slate-400">http://localhost:5173 — 🛡️ Signal vs. Noise & Why Platform > DIY Vibe-Coding</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Better Context Than Any 1 Employee</span>
             </div>
 
-            <div class="p-5 space-y-3">
-              <div class="text-xs text-slate-300 mb-2">
-                <strong>How Talos Discerns What to Build (and What NOT to Build):</strong> Scoring observed desktop & assistant sequences on <span class="text-sky-300 font-semibold">User Relevance (0–100)</span> × <span class="text-emerald-300 font-semibold">Org-Wide Impact (0–100)</span>:
+            <div class="p-5 space-y-3.5 text-xs">
+              <!-- Vibe Coding vs Heavy Rain Autonomous SWE -->
+              <div class="grid grid-cols-2 gap-3">
+                <div class="bg-rose-950/25 border border-rose-500/30 rounded-xl p-3">
+                  <div class="font-bold text-rose-300">❌ DIY "Vibe Coding" in Chat</div>
+                  <ul class="text-slate-400 mt-1.5 space-y-1 list-disc list-inside">
+                    <li>Produces brittle, one-off "AI Slop" UI</li>
+                    <li>No enterprise API keys or DB connectors</li>
+                    <li>Zero SSO/RBAC security or catalog reuse</li>
+                  </ul>
+                </div>
+                <div class="bg-emerald-950/30 border border-emerald-500/50 rounded-xl p-3">
+                  <div class="font-bold text-emerald-300">✓ Heavy Rain Autonomous Argon SWE</div>
+                  <ul class="text-slate-200 mt-1.5 space-y-1 list-disc list-inside">
+                    <li>Combines employee thoughts + org-wide context</li>
+                    <li>Pre-wired API keys, schemas & UI design system</li>
+                    <li>Guides productivity & evolves v1.0 → v1.2</li>
+                  </ul>
+                </div>
               </div>
 
-              <!-- 4 Tiers -->
-              <div class="space-y-2.5 text-xs">
-                <div class="bg-rose-950/30 border border-rose-500/30 rounded-xl p-3 flex items-center justify-between">
-                  <div>
-                    <div class="font-bold text-rose-300">Tier 1: Personal Life / Privacy Shield — Fiancée iMessage + Airbnb Honeymoon Villas</div>
-                    <div class="text-slate-400 mt-0.5">Immediately purged in local RAM; never logged to server, never triggers a build.</div>
-                  </div>
-                  <div class="text-right font-mono shrink-0 ml-4">
-                    <div class="text-rose-400 font-bold">0% User / 0% Org</div>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300">🔒 AUTO_PURGED_ON_DEVICE</span>
-                  </div>
+              <!-- 4 Tiers Summary -->
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 space-y-2">
+                <div class="font-bold text-slate-300">On-Device Signal vs. Noise Discernment:</div>
+                <div class="flex justify-between text-rose-300 font-mono text-[11px]">
+                  <span>Tier 1: Fiancée Honeymoon Airbnb</span>
+                  <span>0% → 🔒 AUTO_PURGED_ON_DEVICE</span>
                 </div>
-
-                <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-3 flex items-center justify-between">
-                  <div>
-                    <div class="font-bold text-slate-300">Tier 2: Casual Non-Work Browsing — X Tech Drama & ESPN Box Scores</div>
-                    <div class="text-slate-400 mt-0.5">Zero downstream clipboard or CRM actions detected. Filtered out of weekly synthesis.</div>
-                  </div>
-                  <div class="text-right font-mono shrink-0 ml-4">
-                    <div class="text-slate-400 font-bold">8% User / 2% Org</div>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400">🔇 IGNORED_AS_NOISE</span>
-                  </div>
+                <div class="flex justify-between text-slate-400 font-mono text-[11px]">
+                  <span>Tier 2: X Tech Drama / Sports Scores</span>
+                  <span>8% → 🔇 IGNORED_AS_NOISE</span>
                 </div>
-
-                <div class="bg-sky-950/30 border border-sky-500/30 rounded-xl p-3 flex items-center justify-between">
-                  <div>
-                    <div class="font-bold text-sky-300">Tier 3: Individual Work Task — TechCrunch AI Funding News → Copy to Affinity Watchlist</div>
-                    <div class="text-slate-400 mt-0.5">Builds a lightweight 1-click "Flag Deal" browser clipper for Marcus only (not pushed firm-wide).</div>
-                  </div>
-                  <div class="text-right font-mono shrink-0 ml-4">
-                    <div class="text-sky-300 font-bold">78% User / 34% Org</div>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300">👤 PERSONAL_MICRO_SKILL</span>
-                  </div>
+                <div class="flex justify-between text-sky-300 font-mono text-[11px]">
+                  <span>Tier 3: TechCrunch Deal Flag → CRM</span>
+                  <span>78% → 👤 PERSONAL_CLIPPER_ONLY</span>
                 </div>
-
-                <div class="bg-emerald-950/40 border-2 border-emerald-500/60 rounded-xl p-3 flex items-center justify-between shadow-lg shadow-emerald-500/10">
-                  <div>
-                    <div class="font-bold text-emerald-300">Tier 4: High-ROI Multi-Team Workflow — 15-Min Pre/Post-Call Loop & 88-Page CIM Bridge</div>
-                    <div class="text-slate-300 mt-0.5">14x/wk repetition + 62%–68% cross-team DNA overlap → Dispatched to Relay & Talos Sandbox Builder!</div>
-                  </div>
-                  <div class="text-right font-mono shrink-0 ml-4">
-                    <div class="text-emerald-300 font-bold">98% User / 95% Org</div>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-semibold">🚀 PROMOTED_TO_FIRM_MVP</span>
-                  </div>
+                <div class="flex justify-between text-emerald-300 font-mono text-[11px] font-bold">
+                  <span>Tier 4: Partner Pre/Post-Call & Close Loop</span>
+                  <span>98% → 🚀 ARGON_SANDBOX_BUILD</span>
                 </div>
               </div>
             </div>
@@ -354,38 +334,33 @@
       },
       {
         id: 'act3',
-        number: 'ACT 3',
-        title: 'Dom’s Product Live: Talos Triage & Smoky Sandbox Build',
-        timeRange: '1:55 – 3:10',
+        number: 'BEAT 3',
+        title: 'What Our Platform Does: Argon Sandbox Builder & Rules',
+        timeRange: '2:05 – 3:20',
         durationSec: 75,
-        speaker: 'DOM (or Co-Narrated)',
+        speaker: 'DOM',
         speakerColor: 'emerald',
         repoLabel: 'argon-hackathon-heavy-rain (127.0.0.1:43170)',
-        screenTab: 'Heavy Rain Console (:43170) — Ingest → Build → Apps',
-        corePillar: 'Pillar #2B: Enterprise-level security, governance, and continuity across every user. Talos checks the Approved App Catalog first (Reuse vs. Missing Evidence vs. Sandbox Build) and compiles verified apps behind the smoky-blur sandbox chamber.',
+        screenTab: 'Heavy Rain Console (:43170) — Ingest → Build → Activity',
+        corePillar: 'FRAMEWORK [WHAT OUR PLATFORM DOES]: Show the magic of the system—Thoughts + Org Context → High-Value Applications. Cairn (Gemini 4 Argon) checks the catalog first (Reuse vs. Legal Gate vs. Build), and dispatches an Argon Sandbox Builder with UI best practices, security, and API connectors.',
         talkTrack: [
           {
-            cue: '1:55 — Switch to Dom’s Heavy Rain Console (:43170) on "Ingest"',
-            text: `"Thanks! This is the Heavy Rain operator console, where our intake service (Relay) and our Gemini 4 Argon orchestrator (Talos / Cairn) turn raw worker evidence into enterprise-grade software."`
+            cue: '2:05 — Start on Heavy Rain Console (:43170) in "Ingest" view',
+            text: `"Thanks! Here inside the Heavy Rain console, you can see why this is a fundamentally new paradigm. Through Relay, we don't scrape raw clicks—we ingest the approved thought process and schemas that employees are already writing down in Claude, Gemini, and ChatGPT."`
           },
           {
-            cue: '2:08 — Show the 3-way routing outcomes in Ingest (Reuse / Need Evidence / Build)',
-            text: `"When workflow context arrives at our weekly cutoff, Talos doesn't blindly generate throwaway apps for every employee—that creates shadow-IT sprawl. Instead, Talos enforces enterprise continuity and security through a strict three-way triage:`
+            cue: '2:20 — Walk through Cairn’s 3 Governance Rules (Reuse / Legal Gate / Argon Sandbox Build)',
+            text: `"At the weekly cutoff, our Gemini 4 Argon coordinator—Cairn—looks across the entire organization's thoughts. Because Cairn has org-wide context that no individual employee has, it enforces sustainability and governance through three strict rules before writing a single line of code:\n\n1. Rule 1 — Reuse Before Build: When two deal associates prompt Claude to clean up 140-row Diligence Request Lists, Cairn checks our Approved Application Catalog first, sees that a governed Diligence Request Tracker already exists, and routes them straight to it. Zero duplicate apps.\n2. Rule 2 — Security & Evidence Gate: When Investor Relations asks chat to check LP Side-Letter MFN clauses, Cairn knows side letters are legally restricted and holds the build until General Counsel attaches an anonymized schema.\n3. Rule 3 — Autonomous Argon Sandbox Build: When a true capability gap is confirmed—like our monthly portfolio variance close or Marcus's call loop—Relay dispatches a Google-hosted Antigravity Sandbox Builder powered by Gemini 4 Argon."`
           },
           {
-            cue: '2:20 — Point to the 3 clusters',
-            text: `1. First, Reuse Before Build: Talos checks the Approved Application Catalog first. When deal associates prompt Claude to deduplicate 140-row Diligence Request Lists, Talos sees that an approved Diligence Tracker already exists in the firm's catalog—and routes them straight to it with zero duplicate compute.\n2. Second, Evidence & Legal Gating: When IR tries to automate LP Side-Letter MFN checks, Talos sees raw side-letters are restricted under legal policy and halts before spending a single builder token—requesting an anonymized schema from General Counsel first.\n3. Third, Managed Sandbox Build: When a verified capability gap exists, Talos dispatches a Google-hosted Antigravity Sandbox Builder running Gemini 4 Argon."`
-          },
-          {
-            cue: '2:48 — Click "Build" in top-left nav & watch the Smoky Blur clear across Checkpoints 1 → 3',
-            text: `"Here in the Build chamber, you're watching the sandbox builder work behind a live state-driven smoky veil across three hard checkpoints: Schema validation, UI assembly, and automated TypeScript & boundary verification. Every app is compiled against our shared @heavy-rain/organization-ui baseline—meaning it automatically inherits the firm's SSO identity, role permissions, audit logging, and theme continuity. Once verification passes, the smoke clears, and with one approval click, the app is live across the firm."`
+            cue: '2:52 — Click "Build" tab & watch the Smoky Veil clear across Checkpoints 1 → 3',
+            text: `"Look at the Build stage: those floating quotes are the exact employee thoughts that commissioned this software. Behind the smoky veil, Argon isn't vibe-coding a toy HTML file—it is compiling a production TypeScript application against our shared @heavy-rain/organization-ui package, wiring up approved API connections, enforcing role-based security, and running automated SHA-256 and boundary tests. When the checks pass, the smoke clears, and the application actually works."`
           }
         ],
         clickCues: [
-          'Start on Heavy Rain Console (http://127.0.0.1:43170) in the "Ingest" view (Rookmere Capital context).',
-          'Show the worker quote cards and the 3 routing decisions: Reuse (Diligence Tracker), Needs Evidence (LP Side Letters), and Sandbox Build (Portfolio Variance / Call Loop).',
-          'Click "Build" in the top-left rail to show the smoky-blur canvas with floating worker quote bubbles.',
-          'Advance/complete the 3 checkpoints (1. Schema check → 2. UI assembly → 3. Verification) so the smoky blur clears (blur 0px) and click the manual Release Approval gate.'
+          'On Heavy Rain Console (http://127.0.0.1:43170), start in "Ingest" showing the employee avatars, verbatim thoughts/quotes, and the 3 routing outcomes.',
+          'Switch to "Build" in the top-left rail to show the smoky blurred build canvas with floating worker thought bubbles.',
+          'Step through Checkpoints 1 → 3 (Schema check → UI assembly → Verification) until the smoke clears (blur 0px) and click the manual Release Approval gate.'
         ],
         screenMockupHtml: `
           <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl smoky-card">
@@ -399,49 +374,48 @@
                   <span>Activity</span>
                 </div>
               </div>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Cairn (gemini-4-argon • high)</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Argon Sandbox Builder</span>
             </div>
 
             <div class="p-5 space-y-4">
-              <!-- 3-Way Gate Summary Strip -->
+              <!-- 3 Rules Strip -->
               <div class="grid grid-cols-3 gap-2.5 text-xs">
                 <div class="bg-slate-950/90 border border-sky-500/40 rounded-xl p-3">
-                  <div class="text-[10px] font-mono uppercase text-sky-400">Path 1 • reuse_existing_app</div>
-                  <div class="font-bold text-white mt-0.5">Diligence Request Tracker v2.4</div>
-                  <div class="text-[11px] text-slate-400 mt-1">Catalog match found! Routed Henrik & Maya directly (0 builder tokens spent).</div>
+                  <div class="text-[10px] font-mono uppercase text-sky-400">Rule 1 • Catalog Reuse</div>
+                  <div class="font-bold text-white mt-0.5">Diligence Tracker v2.4</div>
+                  <div class="text-[11px] text-slate-400 mt-1">Existing app matched! Routed associates directly (no duplicate build).</div>
                 </div>
                 <div class="bg-slate-950/90 border border-amber-500/40 rounded-xl p-3">
-                  <div class="text-[10px] font-mono uppercase text-amber-400">Path 2 • request_missing_evidence</div>
-                  <div class="font-bold text-white mt-0.5">LP Side-Letter MFN Matrix</div>
-                  <div class="text-[11px] text-slate-400 mt-1">Held safely for General Counsel anonymized clause schema (lp_restricted).</div>
+                  <div class="text-[10px] font-mono uppercase text-amber-400">Rule 2 • Legal Gate</div>
+                  <div class="font-bold text-white mt-0.5">LP Side-Letter Matrix</div>
+                  <div class="text-[11px] text-slate-400 mt-1">Held safely for General Counsel anonymized schema.</div>
                 </div>
                 <div class="bg-slate-950/90 border-2 border-emerald-500/60 rounded-xl p-3">
-                  <div class="text-[10px] font-mono uppercase text-emerald-400">Path 3 • build_in_sandbox</div>
+                  <div class="text-[10px] font-mono uppercase text-emerald-400">Rule 3 • Argon Build</div>
                   <div class="font-bold text-white mt-0.5">Rookmere Close & DealPulse</div>
-                  <div class="text-[11px] text-slate-300 mt-1">7 recurring reports • Verified schema gap → Dispatched to Antigravity Sandbox!</div>
+                  <div class="text-[11px] text-slate-300 mt-1">Thoughts + Schemas + API Keys → Antigravity Sandbox Build!</div>
                 </div>
               </div>
 
               <!-- Smoky-Blur Build Chamber Preview -->
-              <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-4 relative overflow-hidden">
+              <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-4">
                 <div class="flex items-center justify-between mb-3">
                   <div>
-                    <span class="text-xs font-bold text-white">Sandbox Build Chamber — Smoky Veil → Sharp Verified Artifact</span>
-                    <div class="text-[11px] text-slate-400">Built on <code class="text-emerald-300">@heavy-rain/organization-ui</code> (SSO, RBAC, SHA-256 tar check, 0 prod writes)</div>
+                    <span class="text-xs font-bold text-white">Smoky Build Chamber (Employee Thoughts + Org Context → Verified App)</span>
+                    <div class="text-[11px] text-slate-400">Compiles against <code class="text-emerald-300">@heavy-rain/organization-ui</code> with managed API credentials & boundary checks</div>
                   </div>
-                  <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500 text-slate-950">✓ Approve for Release</span>
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500 text-slate-950">✓ Approve Release</span>
                 </div>
 
-                <!-- 3 Checkpoints -->
                 <div class="grid grid-cols-3 gap-2 text-xs font-mono">
                   <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-lg p-2.5 text-emerald-200">
-                    ✓ Checkpoint 1: Schema & FX Contract Validated
+                    ✓ 1. Schema & API Contract
                   </div>
                   <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-lg p-2.5 text-emerald-200">
-                    ✓ Checkpoint 2: Organization-UI Assembly
+                    ✓ 2. UI & Security Assembly
                   </div>
                   <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-lg p-2.5 text-emerald-200">
-                    ✓ Checkpoint 3: Boundary & Typecheck Passed (Blur 0px)
+                    ✓ 3. SHA-256 & Typecheck (Blur 0px)
                   </div>
                 </div>
               </div>
@@ -451,83 +425,62 @@
       },
       {
         id: 'act4',
-        number: 'ACT 4',
-        title: 'How This Helps Marcus & His Team (Dedup & Continuity)',
-        timeRange: '3:10 – 4:05',
-        durationSec: 55,
-        speaker: 'YOU & DOM',
+        number: 'BEAT 4',
+        title: 'Prove It Works (Part 1): High-Value Finance Output & ROI',
+        timeRange: '3:20 – 4:10',
+        durationSec: 50,
+        speaker: 'DOM & YOU',
         speakerColor: 'indigo',
-        repoLabel: 'Rookmere Close (:43173) + HeavyRain_BDMD (:5173 Acts 2 & 3)',
-        screenTab: 'Rookmere Close (:43173) & 3. "Already Exists!" Org Dedup (Elena, Devon, Priya, Claire)',
-        corePillar: 'Pillar #2C: How the generated apps transform Marcus’s daily work (42m → 90s + Week 1 → Week 2 self-mutation) AND scale across his teammates (Elena, Devon, Priya, Claire) without duplicate app sprawl.',
+        repoLabel: 'Rookmere Close (:43173) + HeavyRain_BDMD (:5173)',
+        screenTab: 'Rookmere Close (:43173) & Marcus Team Dedup (:5173)',
+        corePillar: 'FRAMEWORK [PROVE IT WORKS — FINANCE ROI]: Show the live, working financial application (Rookmere Close & DealPulse). Prove why deterministic software beats raw chat prompting (which misclassified casting scrap under SG&A!) and show how it scales across Marcus’s entire team ($274k ROI).',
         talkTrack: [
           {
-            cue: '3:10 — Show the finished Finance App output (DealPulse AutoBrief v1.2 & Rookmere Close :43173)',
-            text: `"So what does this actually mean for Marcus on Monday morning? Instead of a 42-minute copy-paste scramble, Marcus opens DealPulse AutoBrief. Twenty minutes before his VeloceAI call, his Affinity history, funding news, and 5 screening questions are already waiting. The second Granola stops recording, his IC deal note and CRM fields are drafted for 1-click send—collapsing 42 minutes into 90 seconds."`
+            cue: '3:20 — Open Rookmere Close (:43173) on Dom’s screen & show the Origin Quotes',
+            text: `"Let's prove the output actually works. Here is Rookmere Close—the live application Argon built from our finance team's monthly close prompts.\n\nPreviously, principals and controllers were pasting German HGB and Nordic trial balances into chat every month—and in Week 39, a raw chat prompt actually misclassified casting scrap under SG&A instead of COGS! Now, instead of fragile chat math, the team has a deterministic, purpose-built workbench:"`
           },
           {
-            cue: '3:28 — Highlight Week 1 → Week 2 Telemetry Evolution (v1.0 → v1.2)',
-            text: `"Even better, Talos doesn't stop at v1.0. During Marcus's Week 1 beta test, Talos notices he clicked the Pre-Call HUD 14 out of 14 times, ignored the public comp ticker, and manually typed 'Key Deal Risks' into 11 emails. For Week 2, Talos auto-mutates v1.2—pruning the unused widget and promoting 'Key Deal Risks' into a first-class field."`
+            cue: '3:40 — Click through the FX vs Operating EBITDA Variance & Covenant Watchlist',
+            text: `"• It maps local ERP trial balances automatically, separates constant-currency operational EBITDA from SEK and NOK FX translation drag, and flags that Nordic ColdChain is at 3.60x net leverage—just 0.15x below its 3.75x maintenance covenant—before Monday's Partner Investment Committee."`
           },
           {
-            cue: '3:42 — Walk through Marcus’s 4 Teammates (Elena, Devon, Priya, Claire)',
-            text: `"And look at how Talos scales continuity across the rest of Marcus's team:\n• Elena Rostova (Principal, Customer Discovery) runs a multi-call loop that shares 68% Workflow DNA with Marcus. Instead of building a duplicate app, Talos reuses Marcus's core Call Engine and attaches Elena's Multi-Call Thesis Matrix—saving 28 build hours.\n• Devon Brooks (Financial Diligence) was duct-taping 88-page PDF CIMs and ERP trial balances into Excel. Talos gives him the CIM-to-IC Bridge and Rookmere Close workbench—separating SEK/NOK FX translation from operating EBITDA and flagging Nordic ColdChain's 3.60x covenant headroom.\n• Priya Nair (VP of Investor Relations) shares 62% DNA with Devon—so Talos wires her LP Instant Desk straight into Devon's verified KPI feed.\n• And Claire Sterling (COO) gets the executive command center: 36.5 hours/week saved, $274k annualized ROI, and 98% SOC2 governance."`
+            cue: '3:54 — Connect back to Marcus & his team’s productivity loop',
+            text: `"• And across the firm, this same engine gives Marcus his 90-second DealPulse AutoBrief (which self-evolves from v1.0 to v1.2 as it guides his weekly productivity), reuses 68% of Marcus's call engine for Elena's customer discovery, and gives our COO a single command center showing 36.5 hours saved every week—$274,000 in annualized partner and deal-team productivity."`
           }
         ],
         clickCues: [
-          'Show Rookmere Close (http://127.0.0.1:43173) on Dom’s screen (highlighting FX vs Operating EBITDA variance and Nordic ColdChain 3.60x vs 3.75x covenant headroom).',
-          'On your screen (:5173), show "2. Recommended App & Beta Loop" (Week 1 v1.0 → Week 2 v1.2 toggle) and "3. Already Exists! Org Dedup & COO View" (Elena 68% match, Devon, Priya 62% match, Claire COO).'
+          'Open Rookmere Close (http://127.0.0.1:43173).',
+          'Filter between All Funds (EUR 1.2bn), RIG-III, and RIG-IV.',
+          'Point to the Origin Quotes card (showing the exact employee thoughts that generated the app) and the Nordic ColdChain 3.60x vs 3.75x covenant alert.',
+          'Reference Marcus’s DealPulse AutoBrief (v1.0 → v1.2) and the 68% / 62% cross-team reuse across Elena, Devon, Priya, and Claire.'
         ],
         screenMockupHtml: `
           <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
             <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
-              <span class="text-xs font-mono text-indigo-300">Rookmere Close (:43173) + Meridian Crest Team Deduplication (:5173)</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">36.5 Hrs/Wk Saved • $274k ROI</span>
+              <span class="text-xs font-mono text-indigo-300">http://127.0.0.1:43173 — Rookmere Close + Marcus Team Impact</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">36.5 Hrs/Wk Saved • $274k/yr ROI</span>
             </div>
 
-            <div class="p-5 space-y-3">
-              <!-- 5 Personas Grid -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
-                <div class="bg-slate-950 border border-sky-500/40 rounded-xl p-3">
-                  <div class="flex justify-between items-center">
-                    <span class="font-bold text-sky-300">1. Marcus Vance (VP, Deal Sourcing)</span>
-                    <span class="font-mono text-[11px] text-emerald-400">-9.2 hrs/wk</span>
-                  </div>
-                  <div class="text-slate-300 mt-1"><strong>DealPulse AutoBrief (v1.0 → v1.2):</strong> 42m call loop → 90s. Self-mutates in Week 2 based on click/edit telemetry.</div>
+            <div class="p-5 space-y-3 text-xs">
+              <div class="bg-slate-950 border border-emerald-500/40 rounded-xl p-3.5">
+                <div class="flex justify-between items-center">
+                  <span class="font-bold text-emerald-300">Rookmere Close (:43173) — Deterministic Trial-Balance & Covenant Workbench</span>
+                  <span class="font-mono text-[11px] text-amber-300">3.60x vs 3.75x Cap Flagged</span>
                 </div>
-
-                <div class="bg-slate-950 border border-indigo-500/40 rounded-xl p-3">
-                  <div class="flex justify-between items-center">
-                    <span class="font-bold text-indigo-300">2. Elena Rostova (Principal, Discovery)</span>
-                    <span class="font-mono text-[11px] text-indigo-300">68% DNA Match w/ Marcus</span>
-                  </div>
-                  <div class="text-slate-300 mt-1"><strong>DiscoveryOS (v1.1):</strong> Forks Marcus's Call Engine + attaches Multi-Call Thesis Matrix (saves 28 eng hrs).</div>
-                </div>
-
-                <div class="bg-slate-950 border border-emerald-500/40 rounded-xl p-3">
-                  <div class="flex justify-between items-center">
-                    <span class="font-bold text-emerald-300">3. Devon Brooks (Financial Diligence)</span>
-                    <span class="font-mono text-[11px] text-emerald-400">-10.8 hrs/wk</span>
-                  </div>
-                  <div class="text-slate-300 mt-1"><strong>CIM Bridge & Rookmere Close (:43173):</strong> HGB/Nordic trial-balance mapper, SEK/NOK FX vs EBITDA bridge & 3.60x covenant watch.</div>
-                </div>
-
-                <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-3">
-                  <div class="flex justify-between items-center">
-                    <span class="font-bold text-amber-300">4. Priya Nair (VP, Investor Relations)</span>
-                    <span class="font-mono text-[11px] text-amber-300">62% DNA Match w/ Devon</span>
-                  </div>
-                  <div class="text-slate-300 mt-1"><strong>LP Instant Desk (v1.0):</strong> Plugs directly into Devon's verified KPI feed—eliminating 7 weekly Slack chases.</div>
-                </div>
+                <p class="text-slate-300 mt-1.5 leading-relaxed">
+                  Eliminates the W39 chat hallucination (where HGB account 5420 casting scrap was misclassified under SG&A). Separates SEK/NOK FX translation from operational EBITDA and checks covenant headroom across 8 portfolio companies.
+                </p>
               </div>
 
-              <!-- Claire COO Bar -->
-              <div class="bg-rose-950/30 border border-rose-500/40 rounded-xl p-3 flex items-center justify-between text-xs">
-                <div>
-                  <span class="font-bold text-rose-300">5. Claire Sterling (COO & Managing Partner — Executive Governance View):</span>
-                  <span class="text-slate-300 ml-1">19 shadow-AI prompt loops converted into SOC2-governed firm micro-apps with 4 duplicate builds prevented.</span>
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="bg-slate-950 border border-sky-500/30 rounded-xl p-3">
+                  <div class="font-bold text-sky-300">Marcus Vance (DealPulse v1.2)</div>
+                  <div class="text-slate-300 mt-1">42m call prep/recap → 90s. Guides productivity by evolving v1.0 → v1.2 from usage telemetry.</div>
                 </div>
-                <span class="font-mono font-bold text-rose-300 shrink-0 ml-3">98% SOC2 Score</span>
+                <div class="bg-slate-950 border border-indigo-500/30 rounded-xl p-3">
+                  <div class="font-bold text-indigo-300">Elena, Devon, Priya & Claire (COO)</div>
+                  <div class="text-slate-300 mt-1">68% & 62% cross-team module reuse; 19 shadow-AI loops converted into 98% SOC2-governed apps.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -535,40 +488,35 @@
       },
       {
         id: 'act5',
-        number: 'ACT 5 (FINALE)',
-        title: 'Dynamic Output (Zero AI Slop): The AUGI Manufacturing 3D Studio',
-        timeRange: '4:05 – 5:00',
-        durationSec: 55,
+        number: 'BEAT 5 (FINALE)',
+        title: 'Prove It Works (Part 2): Zero AI Slop — AUGI 3D Studio',
+        timeRange: '4:10 – 5:00',
+        durationSec: 50,
         speaker: 'DOM & YOU',
         speakerColor: 'amber',
         repoLabel: 'argon-hackathon-heavy-rain (127.0.0.1:43171)',
         screenTab: 'AUGI Sable Studio (:43171) & Sable Balance (:43171/?app=balance)',
-        corePillar: 'Pillar #3: The actual output is up to Talos to dynamically determine. Constant generic "AI slop" chat wrappers or tables don’t help anyone—when we switch from a finance firm to AUGI (an automotive manufacturer), Talos compiles an interactive 3D WebGL / Three.js spatial engineering studio.',
+        corePillar: 'FRAMEWORK [PROVE IT WORKS — ZERO AI SLOP]: Prove that Argon doesn’t just build finance tables or generic chat slop. When dropped into AUGI (an 800V electric SUV manufacturer), it reads engineers’ torsion & mass-balance thoughts and compiles an interactive Three.js 3D engineering studio with analytical guardrails.',
         talkTrack: [
           {
-            cue: '4:05 — Pivot to the Anti-AI-Slop thesis',
-            text: `"Now, here is the most important takeaway of our architecture: what the user actually gets is dynamically determined by Talos. Every other 'AI app builder' spits out the exact same cookie-cutter AI slop—a generic chat box or a cruddy form table. That doesn't help anyone when the domain isn't a spreadsheet problem."`
+            cue: '4:10 — Pivot from Finance to AUGI Manufacturing (:43171)',
+            text: `"Finally, we wanted to prove that Heavy Rain doesn't just build finance tables or generic AI slop. Because Argon reads the actual engineering thoughts of the workforce, it builds purpose-built interfaces matched to the physics of the job.\n\nLook what happens when we switch from private equity to AUGI—an automotive manufacturer developing the AUGI Sable 800-volt electric SUV. At AUGI, Body-in-White and dynamics engineers were prompting Claude and Gemini with closed-box torsion formulas and aluminum wall gauges, and getting back flat 1D text tables that couldn't show 3D spatial geometry."`
           },
           {
-            cue: '4:20 — Switch screen to AUGI Sable Studio (:43171) & orbit the 3D SUV chassis',
-            text: `"Look at what happens when we take Heavy Rain and Talos out of an office finance firm and drop it into AUGI—an automotive manufacturer engineering the AUGI Sable, an 800-volt electric SUV. At AUGI, Body-in-White architects like Lukas and dynamics engineers like Hannah were pasting closed-box torsion equations, wheelbase stretches, and aluminum-to-boron wall gauges into Claude and Gemini every week. And what did chat give them back? Flat 1D text tables that forced engineers to mentally imagine how a 20-millimeter track change affects a 3D skateboard chassis!"`
+            cue: '4:30 — Orbit the 3D chassis in Sable Studio, drag Exploded View (0–100%), and sweep Wall Gauge',
+            text: `"From those 9 engineering prompts, our Argon sandbox builder compiled Sable Studio and Sable Balance on @heavy-rain/organization-3d—a real-time Three.js spatial engineering studio that works out of the box:\n• Engineers orbit and compare SABLE-A, SABLE-B, and SABLE-C megacastings in 3D, watching part counts drop from 142 down to 31.\n• They sweep wheelbase and wall-gauge sliders live, explode the 5 lower-chassis subassemblies along axial vectors, and animate 18,000 N·m axle-twist torsion and center-of-gravity axle load shares.\n• And because an NVH engineer noted in his prompt that beam math must never be mistaken for certified crash FEA, Argon embedded the analytical units and non-claims disclosure right beside the numbers."`
           },
           {
-            cue: '4:38 — Sweep Wheelbase/Gauge sliders, drag 0–100% Exploded View, and toggle Torsion load case',
-            text: `"When Talos clusters those 9 engineering workflows, it recognizes that a table is the wrong modality. So our sandbox builder compiles Sable Studio on @heavy-rain/organization-3d—a full interactive Three.js spatial engineering workbench:\n• Engineers compare SABLE-A (142 parts), SABLE-B (86 parts), and SABLE-C megacastings (31 parts, 49.8 kN·m/deg) side-by-side in real 3D space.\n• They sweep wheelbase and rocker wall gauge sliders in real time, explode the 5 lower-chassis subassemblies along axial vectors, and animate 18,000 N·m axle-twist torsion and bending load cases (plus 3D center-of-gravity axle load share in Sable Balance).\n• And because NVH engineers warned that beam approximations must never be confused with certified crash FEA, Talos embeds the exact analytical units and scope limits right beside the numbers—while routing materials engineers who ask about boron-steel rivets straight to AUGI's existing BIW Joining Registry instead of letting chat hallucinate unsafe fasteners."`
-          },
-          {
-            cue: '4:55 — Closing mic-drop line',
-            text: `"Whether you're an investor like Marcus scrambling before a founder call, or a chassis engineer at AUGI balancing an 800V SUV—you don't need to be a software developer, and you don't need more AI slop. You just do your work, and Heavy Rain & Talos build the exact enterprise software your team actually needs. Thank you!"`
+            cue: '4:52 — Closing Hackathon Mic-Drop',
+            text: `"We are entering the Era of Personal SaaS. People shouldn't have to be software engineers—or settle for brittle vibe-coded slop—to get world-class tools. By capturing the thoughts workers are already writing in AI and pairing them with an autonomous Argon software engineer, Heavy Rain builds high-value software that actually works. Thank you!"`
           }
         ],
         clickCues: [
           'Open AUGI Sable Studio (http://127.0.0.1:43171).',
-          'Orbit/zoom the 3D procedural chassis mesh and toggle between SABLE-A, SABLE-B, and SABLE-C.',
-          'Drag the Wheelbase (2920–3160 mm) or Rocker Wall Gauge (2.2–4.5 mm) slider to show live 3D geometry + stiffness updates.',
-          'Slide the Exploded View (0%–100%) to separate Front Subframe, Rear Megacasting, Side Sills, Crossmember Ladder, and 800V Battery Tray.',
-          'Switch load cases (Static Axle-Twist Torsion 18,000 N·m / Vertical Bending 32,000 N) and point to the inline Concept Approximation Scope disclosure.',
-          'Optional 5-sec tab flip: show Sable Balance (http://127.0.0.1:43171/?app=balance) X-ray mass & CoG calculator.'
+          'Orbit the 3D procedural SUV chassis and switch between SABLE-A (142 parts), SABLE-B (86 parts), and SABLE-C (31 parts, 49.8 kN·m/deg).',
+          'Sweep the Wheelbase (2920–3160 mm) and Rocker Wall Gauge (2.2–4.5 mm) sliders and drag the 0–100% Exploded View slider.',
+          'Toggle the Torsion / Bending load case (45x–60x amplification) and point to the inline Concept Approximation Scope disclosure.',
+          'Quick 3-second tab flip to Sable Balance (http://127.0.0.1:43171/?app=balance) showing the 3D X-ray mass & center-of-gravity calculator.'
         ],
         screenMockupHtml: `
           <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl augi-card">
@@ -577,11 +525,10 @@
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                 <span class="text-xs font-mono text-emerald-300">http://127.0.0.1:43171 — AUGI Sable Studio & Sable Balance (@heavy-rain/organization-3d)</span>
               </div>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Dynamic 3D WebGL Modality</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Purpose-Built 3D • Zero AI Slop</span>
             </div>
 
             <div class="p-5 space-y-4">
-              <!-- 3 Variant Comparison Cards -->
               <div class="grid grid-cols-3 gap-2.5 text-xs">
                 <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-3">
                   <div class="font-mono text-[10px] text-slate-400">BASELINE • SABLE-A</div>
@@ -600,24 +547,23 @@
                 </div>
               </div>
 
-              <!-- Simulated 3D Controls & Load Case Readout -->
               <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div class="space-y-2">
-                  <div class="font-bold text-white uppercase tracking-wider text-[11px]">Interactive 3D Controls on Screen</div>
-                  <div class="flex justify-between text-slate-300"><span>Wheelbase Sweep:</span><span class="font-mono text-emerald-300">2920 – 3160 mm</span></div>
-                  <div class="flex justify-between text-slate-300"><span>Rocker Wall Gauge:</span><span class="font-mono text-emerald-300">2.2 – 4.5 mm (0.2mm steps)</span></div>
-                  <div class="flex justify-between text-slate-300"><span>5-Subassembly Exploded Slider:</span><span class="font-mono text-amber-300">0% → 100% Axial Vectors</span></div>
-                  <div class="flex justify-between text-slate-300"><span>Load Cases (45x–60x Visual Scale):</span><span class="font-mono text-sky-300">18k N·m Torsion / 32k N Bend</span></div>
+                  <div class="font-bold text-white uppercase tracking-wider text-[11px]">Working 3D Engineering Features</div>
+                  <div class="flex justify-between text-slate-300"><span>Wheelbase & Gauge Sliders:</span><span class="font-mono text-emerald-300">2920–3160 mm / 2.2–4.5 mm</span></div>
+                  <div class="flex justify-between text-slate-300"><span>5-Subassembly Exploded View:</span><span class="font-mono text-amber-300">0% → 100% Axial Vectors</span></div>
+                  <div class="flex justify-between text-slate-300"><span>Load Cases (45x–60x Scale):</span><span class="font-mono text-sky-300">18k N·m Torsion / 32k N Bend</span></div>
+                  <div class="flex justify-between text-slate-300"><span>Sable Balance (?app=balance):</span><span class="font-mono text-indigo-300">3D X-Ray CoG & Axle Load</span></div>
                 </div>
                 <div class="bg-slate-900/90 border border-amber-500/30 rounded-lg p-3 flex flex-col justify-between">
                   <div>
-                    <div class="text-[10px] font-mono uppercase text-amber-300">Mandatory Inline Scope Disclosure (emp_augi_07)</div>
+                    <div class="text-[10px] font-mono uppercase text-amber-300">Origin Quote Guardrail Preserved</div>
                     <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
-                      Analytical Bredt-Batho & Euler-Bernoulli concept approximations (<code class="text-emerald-300">mm, kg, kN·m/deg</code>). Visual deformation amplified <code class="text-amber-300">45x–60x</code>; makes no Nastran FEA or crashworthiness certification claims.
+                      Inline disclosure beside metrics: analytical beam-and-shell concept approximations (<code class="text-emerald-300">mm, kg, kN·m/deg</code>), never certified Nastran FEA.
                     </p>
                   </div>
                   <div class="text-[11px] text-sky-300 font-mono mt-2 pt-2 border-t border-slate-800">
-                    + Direct Catalog Reuse: Routes boron-steel rivet queries to BIW Joining Registry v2.0.3!
+                    Proves: Thoughts + Context → Purpose-Built 3D App!
                   </div>
                 </div>
               </div>
@@ -631,11 +577,11 @@
     // UI STATE & RENDERERS
     // ============================================================================
     let currentActIndex = 0;
-    let displayMode = 'step'; // 'step' | 'all'
+    let displayMode = 'step';
     let timerSeconds = 0;
     let timerInterval = null;
-    let checkedCues = JSON.parse(localStorage.getItem('hr_demo_checked_cues') || '{}');
-    let actNotes = JSON.parse(localStorage.getItem('hr_demo_act_notes') || '{}');
+    let checkedCues = JSON.parse(localStorage.getItem('hr_demo_checked_cues_v2') || '{}');
+    let actNotes = JSON.parse(localStorage.getItem('hr_demo_act_notes_v2') || '{}');
 
     function renderTabsBar() {
       const bar = document.getElementById('act-tabs-bar');
@@ -668,7 +614,7 @@
 
       return `
         <div class="bg-slate-900/50 border border-slate-800/90 rounded-3xl p-6 mb-8 shadow-xl">
-          <!-- Act Header Banner -->
+          <!-- Beat Header Banner -->
           <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-800">
             <div>
               <div class="flex items-center gap-2.5">
@@ -682,18 +628,18 @@
             ${displayMode === 'step' ? `
               <div class="flex items-center gap-2">
                 <button onclick="prevAct()" ${idx === 0 ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-700 text-slate-200 hover:bg-slate-800 disabled:opacity-40 cursor-pointer">
-                  ← Prev Act
+                  ← Prev Beat
                 </button>
                 <button onclick="nextAct()" ${idx === ACTS.length - 1 ? 'disabled' : ''} class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-slate-950 hover:bg-sky-400 disabled:opacity-40 cursor-pointer">
-                  Next Act →
+                  Next Beat →
                 </button>
               </div>
             ` : ''}
           </div>
 
-          <!-- Core Narrative Goal Callout -->
+          <!-- Core Framework Callout -->
           <div class="mb-6 bg-indigo-950/30 border border-indigo-500/30 rounded-2xl px-4 py-3 text-xs text-indigo-200 flex items-start gap-2.5">
-            <span class="font-bold uppercase font-mono text-indigo-400 shrink-0 mt-0.5">Why This Beat Matters:</span>
+            <span class="font-bold uppercase font-mono text-indigo-400 shrink-0 mt-0.5">Framework Alignment:</span>
             <span class="leading-relaxed">${act.corePillar}</span>
           </div>
 
@@ -707,7 +653,7 @@
               </div>
 
               <div class="space-y-3.5">
-                ${act.talkTrack.map((block, bIdx) => `
+                ${act.talkTrack.map((block) => `
                   <div class="bg-slate-950/90 border border-slate-800/90 rounded-2xl p-4 hover:border-slate-700 transition">
                     <div class="text-[11px] font-mono text-sky-400 font-semibold mb-1.5 flex items-center gap-1.5">
                       <span>●</span>
@@ -718,12 +664,12 @@
                 `).join('')}
               </div>
 
-              <!-- Live Co-Editing Notes Box with Dom -->
+              <!-- Live Co-Editing Notes Box -->
               <div class="pt-2">
                 <label class="block text-xs font-mono uppercase text-amber-300/90 mb-1.5">📝 Live Discussion Notes / Tweaks with Dom for ${act.number}:</label>
                 <textarea
                   oninput="saveNote('${act.id}', this.value)"
-                  placeholder="Type any adjustments, handoff tweaks, or timing notes here while reviewing with Dom (auto-saved in browser)..."
+                  placeholder="Type any adjustments, handoff tweaks, or timing notes here (auto-saved in browser)..."
                   class="w-full h-20 bg-slate-950/80 border border-slate-800 focus:border-amber-500/50 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none"
                 >${notesVal}</textarea>
               </div>
@@ -827,17 +773,17 @@
 
     function toggleCue(key, val) {
       checkedCues[key] = val;
-      localStorage.setItem('hr_demo_checked_cues', JSON.stringify(checkedCues));
+      localStorage.setItem('hr_demo_checked_cues_v2', JSON.stringify(checkedCues));
       renderMain();
     }
 
     function saveNote(actId, val) {
       actNotes[actId] = val;
-      localStorage.setItem('hr_demo_act_notes', JSON.stringify(actNotes));
+      localStorage.setItem('hr_demo_act_notes_v2', JSON.stringify(actNotes));
     }
 
     // ============================================================================
-    // 5-MINUTE STAGE REHEARSAL TIMER (Auto-highlights current Act by timestamp)
+    // 5-MINUTE STAGE REHEARSAL TIMER
     // ============================================================================
     function formatTime(sec) {
       const m = Math.floor(sec / 60).toString().padStart(2, '0');
@@ -850,7 +796,7 @@
       disp.textContent = `${formatTime(timerSeconds)} / 05:00`;
       if (timerSeconds >= 300) {
         disp.className = 'font-mono text-sm font-bold text-rose-400';
-      } else if (timerSeconds >= 245) {
+      } else if (timerSeconds >= 250) {
         disp.className = 'font-mono text-sm font-bold text-amber-300';
       } else {
         disp.className = 'font-mono text-sm font-bold text-white';
@@ -871,13 +817,12 @@
         timerInterval = setInterval(() => {
           timerSeconds++;
           updateTimerUI();
-          // Automatically advance Act in step mode at target boundaries (50s, 115s, 190s, 245s)
           if (displayMode === 'step') {
             let targetIdx = 0;
-            if (timerSeconds >= 245) targetIdx = 4;
-            else if (timerSeconds >= 190) targetIdx = 3;
-            else if (timerSeconds >= 115) targetIdx = 2;
-            else if (timerSeconds >= 50) targetIdx = 1;
+            if (timerSeconds >= 250) targetIdx = 4;
+            else if (timerSeconds >= 200) targetIdx = 3;
+            else if (timerSeconds >= 125) targetIdx = 2;
+            else if (timerSeconds >= 65) targetIdx = 1;
             if (targetIdx !== currentActIndex) {
               currentActIndex = targetIdx;
               renderMain();
@@ -898,7 +843,6 @@
       updateTimerUI();
     }
 
-    // Keyboard navigation (Left/Right arrows when not typing in textarea)
     window.addEventListener('keydown', (e) => {
       if (['TEXTAREA', 'INPUT'].includes(document.activeElement?.tagName)) return;
       if (e.key === 'ArrowRight') nextAct();
@@ -909,7 +853,6 @@
       }
     });
 
-    // Initial render
     renderMain();
   </script>
 </body>

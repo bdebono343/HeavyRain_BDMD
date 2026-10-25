@@ -1,132 +1,114 @@
-# Heavy Rain × Talos — Complete 5-Minute Live Demo Script & Talk Track
+# Heavy Rain — Revised Demo Script & Talk Track (Post-Dom Sync)
 
 > [!IMPORTANT]
-> **Core Narrative Arc (5 Minutes, Co-Presented by You & Dom)**
-> 1. **The Modern Work Problem (`0:00 – 0:50`)**: Workers complete high-frequency, multi-app workflows every week—already using AI tools in silos—without realizing their "human glue" routine is a textbook candidate for custom software.
-> 2. **Meet Marcus & Why He Needs Talos (`0:50 – 1:55`)**: Marcus is deeply technical at *investing*, not software engineering. **Talos** (the agentic harness inside **Heavy Rain**) passively observes his desktop loop, purges personal noise on-device, stack-ranks by user & org impact, and packages the context automatically.
-> 3. **Dom's Platform Live — How Talos Works Under the Hood (`1:55 – 3:10`)**: Inside the Heavy Rain Console (`Ingest` → `Build` → `Apps`), **Relay** and **Talos (`Cairn`)** enforce enterprise security, continuity, and a 3-way gate (**Reuse Catalog App**, **Hold for Missing Evidence**, or **Commission Sandbox Build** behind the smoky-blur veil).
-> 4. **Impact on Marcus & His Entire Team (`3:10 – 4:05`)**: How Marcus's **DealPulse AutoBrief** & **Rookmere Close** save hours, self-mutate from Week 1 to Week 2 (`v1.0 → v1.2`), and deduplicate across his teammates (**Elena**, **Devon**, **Priya**, and **Claire**).
-> 5. **The Anti-AI-Slop Finale — Dynamic Modality at AUGI Manufacturing (`4:05 – 5:00`)**: Why cookie-cutter AI chat wrappers fail. When we switch from finance to **AUGI** (an 800V electric SUV manufacturer), Talos dynamically determines that engineers don't need a form—they need **Sable Studio**, an interactive 3D WebGL chassis & load-case comparator.
+> **Hackathon North Star: The 3 Things This Pitch Proves**
+> 1. **Prove the Idea (Why This Is the Right Problem)**: Sam Altman called this the **"Era of Personal SaaS"**—just like the Dot-Com era when every business needed a website, today every knowledge worker needs custom software for their workflow. Workers are experts at their craft, not software engineers, and you can't hire a human software engineer for every employee.
+> 2. **Why Now (Why This Was Impossible 18 Months Ago)**:
+>    - **From Tracking Clicks → Reading Thought Processes**: Old "system supervisor" / RPA tools only saw *mouse clicks* inside rigid legacy apps. Today, work has shifted into **Claude, ChatGPT, and Gemini**, where employees **write down their exact thought process, intent, and logic**.
+>    - **Better Than DIY "Vibe Coding" via Gemini 4 Argon**: An employee vibe-coding alone produces fragile AI slop without API keys, security rules, or continuity. **Gemini 4 Argon** running in an autonomous **Antigravity Sandbox** has *more context than any single employee*—combining their written thoughts with org-wide schemas, pre-wired API connectors, and strict UI/security guardrails.
+> 3. **Prove It Works (High-Value Applications That Actually Work)**:
+>    - **Finance Partner ROI (Marcus & Rookmere Capital)**: Saving an Investment Partner or Principal 1–2 hours a week on deal calls and monthly portfolio variance close is worth tens of thousands of dollars per partner.
+>    - **Anti-AI-Slop Purpose-Built Modality (AUGI 3D Engineering)**: Proving the system doesn't spit out generic chat slop—it autonomously compiles a working **Three.js 3D Chassis & Mass-Balance Studio** for automotive engineers.
 
 ---
 
-## Pre-Flight Screen Setup
-
-- **Your Browser (`http://localhost:5173`)**: Start on **Marcus Vance** (`VP, Deal Sourcing & Screening`) with **`1. Before HeavyRain (Animated Workflow)`** selected.
-- **Dom's Browser (`argon-hackathon-heavy-rain`)**:
-  - Tab 1: **Heavy Rain Operator Console** (`http://127.0.0.1:43170`) — set to **Ingest / Work** view.
-  - Tab 2: **Rookmere Close** (`http://127.0.0.1:43173`) — Finance variance & covenant workbench.
-  - Tab 3: **AUGI Sable Studio** (`http://127.0.0.1:43171`) & **Sable Balance** (`http://127.0.0.1:43171/?app=balance`) — 3D WebGL engineering studio.
-
----
-
-## Act 1: The Problem — "Invisible Workflows & The Human Glue Trap" (`0:00 – 0:50`)
-**Speaker:** You | **Screen:** Your UI (`1. Before HeavyRain (Animated Workflow)`)
+## Beat 1: The Problem & "Why Now" (`0:00 – 1:05`)
+**Framework:** *What is the problem? Why is it possible to solve right now?*
+**Speaker:** You | **Screen:** Your UI (`1. Before HeavyRain (Animated Workflow)` — `http://localhost:5173`)
 
 ### Visual / Click Cues
-1. Start on `http://localhost:5173` with **Marcus Vance** selected.
-2. Click **`Auto-Play Animated Story`** so the desktop window animation morphs live behind you (*Outlook 15-Min Reminder → Affinity CRM → Google News → Claude 3.7 Skill → Zoom + Granola Waveform → Gemini Post-Call Polisher → Deal Team Email & Slack*).
+1. Start on `http://localhost:5173` (`1. Before HeavyRain (Animated Workflow)` with **Marcus Vance** selected).
+2. Click **`Auto-Play Animated Story`** so the audience sees a worker jumping between Outlook, CRM, Claude, Granola, and Gemini.
 
 ### Spoken Talk Track
-> **"Every week, knowledge workers across finance, operations, and engineering execute hundreds of complex, high-stakes workflows. And here is the fundamental problem: the people doing the work have no idea that what they are doing is a prime candidate for custom software."**
+> **"Sam Altman recently said we are entering the *'Era of Personal SaaS'*—a world where software is tailored to the exact workflows of individuals and teams. Think back to the Dot-Com era: every company suddenly needed a website, and people were great at running their business, not hand-coding HTML. Today, we have the exact same bottleneck with internal software: people are deeply technical at their actual jobs, but they aren't software engineers. And you obviously can't hire a dedicated human software engineer to sit next to every single employee—that will never scale."**
 >
-> **"Why? Because to them, it just feels like 'doing their job.' Even worse—everyone on these teams *already uses AI*. They have Claude skills, Gemini, ChatGPT Enterprise, and Granola call recorders. Look at the animation on screen right now: modern workers aren't failing to adopt AI—they are trapped acting as the 'human copy-paste glue' between disconnected AI silos and legacy tabs."**
+> **"So why hasn't autonomous workflow software worked before, and *why is it suddenly possible right now*? Two massive shifts just converged:"**
 >
-> **"They don't have the time, the product management lens, or the engineering background to step back and say, *'Wait—I just did this exact 7-step loop 14 times this week; someone should build an enterprise app for this.'* And even if they did, IT backlogs mean it would never get built."**
+> **"First, work has shifted from clicking buttons inside rigid, purpose-built SaaS tools to reasoning inside Claude, ChatGPT, and Gemini. Under the old paradigm, 'system supervisor' tools had to track mouse clicks—and clicks only tell you *where* someone clicked, never *why*. Today, as workers prompt AI assistants across their workflow, they are literally writing down their entire thought process, business logic, and intent in plain English."**
+>
+> **"Second, with Gemini 4 Argon running inside autonomous sandboxes, we don't just suggest another prompt—we give every employee a *Personal Autonomous Software Engineer* that turns their written thought process into sustainable, enterprise-grade applications."**
 
 ---
 
-## Act 2: Meet Marcus Vance & Enter Talos (`0:50 – 1:55`)
-**Speaker:** You | **Screen:** Your UI (`Marcus Workflow` → `🛡️ Signal vs. Noise & Stack-Ranker`)
+## Beat 2: Why Not Just "Vibe Code" It? — Meet Marcus & The High-Value Partner Problem (`1:05 – 2:05`)
+**Framework:** *What can we fix? Why is an autonomous platform better than DIY vibe-coding?*
+**Speaker:** You | **Screen:** Your UI (`Marcus Profile` → `🛡️ Signal vs. Noise & Stack-Ranker`)
 
 ### Visual / Click Cues
-1. Point to **Marcus Vance's profile card** and the **`Live Background Telemetry Stream (/api/observe)`** on the right.
-2. Click **`🛡️ Signal vs. Noise & Stack-Ranker`** in the top navigation bar to show the 4-tier discernment matrix.
+1. Point to **Marcus Vance's 7-step loop** on screen (`Outlook → Affinity CRM → Google News → Claude Skill → Granola → Gemini → Email/Slack`).
+2. Click **`🛡️ Signal vs. Noise & Stack-Ranker`** to show how the system separates noise from high-value partner/firm workflows.
 
 ### Spoken Talk Track
-> **"Take Marcus Vance here. Marcus is a VP of Deal Sourcing at a $1.8B growth equity firm. Now, Marcus is *deeply technical at his role*—he can tear apart an ARR retention bridge, interrogate SaaS gross margins, and structure a Series B term sheet in his sleep. But he is *not* a software engineer. He isn't going to wire up Outlook webhooks, write React frontends, or configure enterprise OAuth."**
+> **"To see why this matters, look at Marcus Vance—a Partner and VP of Deal Sourcing at a $1.8B private equity firm. Think about the economics of Marcus's time: if you save an investment partner or principal even *one hour a week*, that is worth tens of thousands of dollars in deal velocity and carry. Right now, Marcus wastes 42 minutes before and after *every single founder call*—14 times a week—acting as the human copy-paste glue between Outlook, Affinity CRM, a Claude pre-call skill, Granola call notes, and Gemini."**
 >
-> **"Look at what happens 15 minutes before Marcus's intro call with VeloceAI: Outlook pops a reminder. Marcus scrambles across Affinity CRM, old emails, and Google News, manually copies snippets into a Claude pre-call skill, jumps on Zoom with Granola recording, exports the raw 6,400-word transcript into Gemini to format a Deal Note, and pastes it into Outlook and Slack. Three separate AI tools—and he still wastes 42 minutes per call doing 5 manual copy-paste handoffs, 14 times a week."**
->
-> **"Marcus doesn't need another chatbot. He needs *Talos*—our agentic harness powering the Heavy Rain platform."**
+> **"Now, a natural question is: *'Why doesn't Marcus just vibe-code an app himself?'*"**
+> 1. **"First, Marcus is heads-down evaluating deals—he doesn't even stop to realize his weekly routine *should* be an app."**
+> 2. **"Second, even if someone tries to vibe-code a tool in chat, they get disposable AI slop. It doesn't have the firm's API keys, database connectors, SSO permissions, or UI standards—and it breaks the next week."**
 >
 > *(Click `🛡️ Signal vs. Noise & Stack-Ranker`)*
-> **"Instead of waiting for Marcus to write a software spec, Talos observes his workflow context across desktop and assistant tools, and immediately runs our Signal-vs-Noise Stack-Ranker along two axes: *Individual User Relevance* and *Org-Wide Impact*:"**
-> - **"When Marcus texts his fiancée and browses Airbnb for his honeymoon? `0% work relevance`—auto-purged in local RAM on-device. Never logged, never leaves his laptop."**
-> - **"Scrolling morning sports scores or X drama? `8%`—ignored as routine noise."**
-> - **"Spotting an AI funding round on TechCrunch and copying it to his CRM watchlist? `78% User Relevance, 34% Org Impact`—Talos spins up a lightweight personal 1-click clipper just for Marcus."**
-> - **"But Marcus's 15-minute Pre- and Post-Call Loop? `98% User Relevance` and `95% Org Impact`. Talos packages the verified workflow evidence and sends it to our coordination engine to build a governed enterprise application. Dom, show them what happens when Talos takes over."**
+> **"That's the magic of Heavy Rain: our agentic harness has *better context than any single employee*. On-device, it filters out personal noise—like Marcus texting his fiancée about Airbnb honeymoon villas (`0%`—auto-purged) or reading sports scores (`8%`—ignored)—and captures the high-value *thought process + workflow context* (`98%` score) to hand off to our autonomous Argon builder. Dom, show them how the platform turns those thoughts into real software."**
 
 ---
 
-## Act 3: Inside Dom's Backend — How Talos Governs, Reuses & Builds (`1:55 – 3:10`)
-**Speaker:** Dom (or You narrating Dom's screen) | **Screen:** Dom's Heavy Rain Console (`http://127.0.0.1:43170`)
+## Beat 3: What Our Platform Does — Inside Dom's Autonomous Engine (`2:05 – 3:20`)
+**Framework:** *How does the platform turn Thoughts + Context into governed, sustainable applications?*
+**Speaker:** Dom | **Screen:** Dom's **Heavy Rain Console (`http://127.0.0.1:43170`)** (`Ingest` → `Build` → `Activity`)
 
 ### Visual / Click Cues
-1. On **Heavy Rain Console (`:43170`)**, start in **`Ingest` (`Work`)**: Show the synthetic worker avatars, verbatim workflow quotes, and the 3-way routing outcomes (`Reuse existing app`, `Need evidence`, `Commission sandbox build`).
-2. Click into **`Build` (`System`)**: Show the **Smoky-Blur Sandbox Build Canvas** with worker quote bubbles and the 3 verified checkpoints (`1. Schema check` → `2. UI assembly` → `3. Verification`).
-3. Let the smoky veil clear (`blur 0px`) to reveal the sharp, verified application preview and manual release approval gate.
-4. Briefly click **`Activity`** / Inspector Drawer to show the SHA-256 verification, role permissions, and zero-production-write safety boundary.
+1. On **Heavy Rain Console (`:43170`)**, start in **`Ingest` (`Work`)**: Point to the verbatim employee chat excerpts/thoughts and the 3 routing outcomes (`Reuse existing app`, `Request missing evidence`, `Commission sandbox build`).
+2. Click **`Build` (`System`)**: Show the **Smoky-Blur Sandbox Build Canvas** with floating employee thought bubbles and the 3 verification checkpoints (`1. Schema check` → `2. UI assembly` → `3. Verification`).
+3. Let the smoky veil clear (`blur 0px`) to show the live, verified application and click the manual **Approve for Release** gate.
 
 ### Spoken Talk Track
-> **"Thanks! This is the Heavy Rain operator console, where our intake service (*Relay*) and our Gemini 4 Argon orchestrator (*Talos / Cairn*) turn raw worker evidence into enterprise-grade software."**
+> **"Thanks! Here inside the Heavy Rain console, you can see why this is a fundamentally new paradigm. Through *Relay*, we don't scrape raw clicks—we ingest the approved *thought process and schemas* that employees are already writing down in Claude, Gemini, and ChatGPT."**
 >
-> **"When workflow context arrives at our weekly cutoff, Talos doesn't just blindly generate one-off throwaway apps for every employee. That would create massive shadow-IT sprawl and security holes. Instead, Talos enforces *enterprise continuity and security* through a strict three-way triage:"**
+> **"At the weekly cutoff, our Gemini 4 Argon coordinator—*Cairn*—looks across the entire organization's thoughts. Because Cairn has org-wide context that no individual employee has, it enforces sustainability and governance through three strict rules before writing a single line of code:"**
+> 1. **"Rule 1 — Reuse Before Build: When two deal associates prompt Claude to clean up 140-row Diligence Request Lists, Cairn checks our Approved Application Catalog first, sees that a governed *Diligence Request Tracker* already exists, and routes them straight to it. Zero duplicate apps."**
+> 2. **"Rule 2 — Security & Evidence Gate: When Investor Relations asks chat to check LP Side-Letter MFN clauses, Cairn knows side letters are legally restricted and holds the build until General Counsel attaches an anonymized schema."**
+> 3. **"Rule 3 — Autonomous Argon Sandbox Build: When a true capability gap is confirmed—like our monthly portfolio variance close or Marcus's call loop—Relay dispatches a Google-hosted Antigravity Sandbox Builder powered by Gemini 4 Argon."**
 >
-> 1. **"First, Reuse Before Build: Talos checks the organization's Approved Application Catalog first. When two deal associates repeatedly prompt Claude to deduplicate 140-row Diligence Request Lists, Talos detects that an approved *Diligence Request Tracker* already exists in the firm's catalog with the exact right permissions—and routes them directly to it with zero duplicate compute."**
-> 2. **"Second, Evidence & Legal Gating: When Investor Relations tries to automate LP Side-Letter MFN checks, Talos sees that raw side-letters are restricted under legal policy and halts *before* spending a single builder token—requesting an anonymized schema from General Counsel first."**
-> 3. **"Third, Managed Sandbox Build: When a verified capability gap exists—like Marcus's call loop or our monthly portfolio variance close—Talos dispatches a Google-hosted Antigravity Sandbox Builder running Gemini 4 Argon."**
->
-> *(Switch to `Build` view as the smoky canvas runs checkpoints)*
-> **"Here in the Build chamber, you're watching the sandbox builder work behind a live state-driven smoky veil across three hard checkpoints: Schema validation, UI assembly, and automated TypeScript & boundary verification. Every app is compiled against our shared `@heavy-rain/organization-ui` baseline—meaning it automatically inherits the firm's SSO identity, role-based access matrix, audit logging, and theme continuity. Once verification passes, the smoke clears, and with one approval click, the app is live across the firm."**
+> *(Click `Build` tab as the smoky blur clears across Checkpoints 1 → 3)*
+> **"Look at the Build stage: those floating quotes are the exact employee thoughts that commissioned this software. Behind the smoky veil, Argon isn't vibe-coding a toy HTML file—it is compiling a production TypeScript application against our shared `@heavy-rain/organization-ui` package, wiring up approved API connections, enforcing role-based security, and running automated SHA-256 and boundary tests. When the checks pass, the smoke clears, and the application actually works."**
 
 ---
 
-## Act 4: How This Helps Marcus & His Entire Team (`3:10 – 4:05`)
-**Speaker:** You & Dom | **Screen:** Quick toggle from Dom's **Rookmere Close (`:43173`)** back to Your UI (`2. Recommended App & Beta Loop` + `3. "Already Exists!" Org Dedup & COO View`)
+## Beat 4: Prove It Works (Part 1) — High-Value Finance Output & Team Scale (`3:20 – 4:10`)
+**Framework:** *Prove the application works and delivers immediate executive/partner ROI*
+**Speaker:** Dom & You | **Screen:** Dom's **Rookmere Close (`http://127.0.0.1:43173`)** + Your UI (`2. Recommended App` & `3. Org Dedup` on `:5173`)
 
 ### Visual / Click Cues
-1. Show **Rookmere Close (`http://127.0.0.1:43173`)** on Dom's screen (trial-balance mapping, FX vs. operating EBITDA variance, and Nordic ColdChain `3.60x vs 3.75x` covenant headroom) AND/OR **DealPulse AutoBrief (`v1.2`)** on your screen (`2. Recommended App & Beta Loop`).
-2. Toggle **Week 1 (`v1.0`) → Week 2 (`v1.2`)** in `2. Recommended App & Beta Loop` to show telemetry-driven evolution.
-3. Click **`3. "Already Exists!" Org Dedup & COO View`** and click through **Elena Rostova (`68% match`)**, **Devon Brooks**, **Priya Nair (`62% match`)**, and **Claire Sterling (`COO View`)**.
+1. Switch to **Rookmere Close (`http://127.0.0.1:43173`)** on Dom's screen: Interact with the fund filter (`RIG-III EUR 480m` / `RIG-IV EUR 720m`), show the **Constant-Currency vs. FX Translation Variance Table** (`SEK` / `NOK` -> `EUR`), and point to the **Nordic ColdChain `3.60x vs 3.75x` Covenant Headroom Watchlist**.
+2. Point to the **Origin Quotes** right inside the app showing the exact analyst/principal prompts that created it, and note how it connects across Marcus's team (**Elena's 68% Call Engine reuse**, **Devon's CIM bridge**, **Priya's LP desk**, **Claire's COO $274k ROI dashboard**).
 
 ### Spoken Talk Track
-> **"So what does this actually mean for Marcus on Monday morning? Instead of a 42-minute copy-paste scramble, Marcus opens *DealPulse AutoBrief*. Twenty minutes before his VeloceAI call, his Affinity history, funding news, and 5 tailored screening questions are already waiting. The second Granola stops recording, his IC deal note and CRM fields are drafted for 1-click send—collapsing 42 minutes into 90 seconds."**
+> **"Let's prove the output actually works. Here is *Rookmere Close*—the live application Argon built from our finance team's monthly close prompts."**
 >
-> **"Even better, Talos doesn't stop at v1.0. During Marcus's Week 1 beta test, Talos passively notices he clicked the Pre-Call HUD 14 out of 14 times, ignored the public comp ticker, and manually typed 'Key Deal Risks' into 11 emails. For Week 2, Talos auto-mutates `v1.2`—pruning the unused widget and promoting 'Key Deal Risks' into a first-class schema field."**
->
-> *(Click `3. "Already Exists!" Org Dedup & COO View`)*
-> **"And look at how Talos scales continuity across the rest of Marcus's team:"**
-> - **"Elena Rostova (Principal on Customer Discovery) runs a multi-call synthesis loop that shares **68% Workflow DNA** with Marcus. Instead of building a second siloed app, Talos intercepts it, reuses Marcus's core Call Engine, and attaches Elena's *Multi-Call Thesis Matrix*—saving 28 engineering hours."**
-> - **"Devon Brooks (Senior Associate in Financial Diligence) was spending 10.8 hours a week duct-taping 88-page PDF CIM tables and multi-currency ERP trial balances into Excel. Talos builds his *CIM-to-IC Bridge* and *Rookmere Close* workbench—separating SEK and NOK FX translation from operating EBITDA and automatically flagging covenant headroom."**
-> - **"Priya Nair (VP of Investor Relations) shares **62% DNA** with Devon—so Talos wires her *LP Instant Desk* straight into Devon's verified KPI feed, eliminating 7 weekly Slack fire drills."**
-> - **"And for Claire Sterling, our COO, she gets a single executive command center: 36.5 hours saved every week, $274,000 in annualized ROI, and 19 shadow-AI prompt loops converted into SOC2-governed applications."**
+> **"Previously, principals and controllers were pasting German HGB and Nordic trial balances into chat every month—and in Week 39, a raw chat prompt actually misclassified casting scrap under SG&A instead of COGS! Now, instead of fragile chat math, the team has a deterministic, purpose-built workbench:"**
+> - **"It maps local ERP trial balances automatically, separates constant-currency operational EBITDA from SEK and NOK FX translation drag, and flags that *Nordic ColdChain* is at `3.60x` net leverage—just `0.15x` below its `3.75x` maintenance covenant—before Monday's Partner Investment Committee."**
+> - **"And across the firm, this same engine gives Marcus his 90-second *DealPulse AutoBrief* (which self-evolves from `v1.0` to `v1.2` as it guides his productivity), reuses 68% of Marcus's call engine for Elena's customer discovery, and gives our COO a single command center showing 36.5 hours saved every week—$274,000 in annualized partner and deal-team productivity."**
 
 ---
 
-## Act 5: Finale — Dynamic Output (No AI Slop): The AUGI Manufacturing Example (`4:05 – 5:00`)
+## Beat 5: Prove It Works (Part 2) — Zero AI Slop: AUGI 3D Manufacturing Studio (`4:10 – 5:00`)
+**Framework:** *Prove the system builds purpose-built software (not generic AI slop) for any domain*
 **Speaker:** Dom & You | **Screen:** Dom's **AUGI Sable Studio (`http://127.0.0.1:43171`)** & **Sable Balance (`http://127.0.0.1:43171/?app=balance`)**
 
 ### Visual / Click Cues
-1. Switch to **Sable Studio (`http://127.0.0.1:43171`)** on Dom's screen.
-2. Orbit the 3D WebGL chassis in the viewport and toggle between **`SABLE-A`** (142 parts, 384 kg), **`SABLE-B`** (Cell-to-Body + boron rings, 86 parts), and **`SABLE-C`** (HPDC megacastings, 31 parts, 338 kg, `49.8 kN·m/deg`).
-3. Sweep the **Wheelbase (`2920–3160 mm`)** or **Rocker Wall Gauge (`2.2–4.5 mm`)** slider, drag the **Exploded View (`0%–100%`)** slider to separate the 5 lower-chassis subassemblies, and toggle the **Torsion / Vertical Bending** load case (`45x–60x` visual amplification).
-4. Point to the **Origin Worker Quotes** card (`Lukas Lindner`, `Kenji Takahashi`, `Hannah Bergström`) and the **inline Concept Approximation Scope notice** beside the stiffness numbers.
-5. Optional 5-second flash: switch to **Sable Balance (`http://127.0.0.1:43171/?app=balance`)** showing the 3D X-ray mass & center-of-gravity axle load calculator.
+1. Switch to **AUGI Sable Studio (`http://127.0.0.1:43171`)**.
+2. Orbit the 3D WebGL SUV chassis and click between **`SABLE-A`** (142 parts, 384 kg), **`SABLE-B`** (Cell-to-Body + boron rings, 86 parts), and **`SABLE-C`** (HPDC megacastings, 31 parts, `49.8 kN·m/deg`).
+3. Sweep the **Wheelbase (`2920–3160 mm`)** or **Rocker Wall Gauge (`2.2–4.5 mm`)** slider, drag the **Exploded View (`0%–100%`)** slider to separate the 5 subassemblies, and toggle the **Torsion / Bending** load case (`45x–60x`).
+4. Flash **Sable Balance (`http://127.0.0.1:43171/?app=balance`)** showing the 3D X-ray mass & center-of-gravity axle load calculator.
 
 ### Spoken Talk Track
-> **"Now, here is the most important takeaway of our architecture: *what the user actually gets is dynamically determined by Talos.*"**
+> **"Finally, we wanted to prove that Heavy Rain doesn't just build finance tables or generic AI slop. Because Argon reads the *actual engineering thoughts* of the workforce, it builds purpose-built interfaces matched to the physics of the job."**
 >
-> **"Every other 'AI app builder' spits out the exact same cookie-cutter AI slop—a generic chat box or a cruddy form table. That doesn't help anyone if the domain isn't a spreadsheet problem."**
+> **"Look what happens when we switch from private equity to *AUGI*—an automotive manufacturer developing the *AUGI Sable* 800-volt electric SUV. At AUGI, Body-in-White and dynamics engineers were prompting Claude and Gemini with closed-box torsion formulas and aluminum wall gauges, and getting back flat 1D text tables that couldn't show 3D spatial geometry."**
 >
-> **"Look at what happens when we take Heavy Rain and Talos out of an office finance firm and drop it into *AUGI*—an automotive manufacturer engineering the *AUGI Sable*, an 800-volt electric SUV."**
+> *(Orbit the 3D chassis in `Sable Studio`, drag the Exploded View slider, and sweep Rocker Wall Gauge)*
+> **"From those 9 engineering prompts, our Argon sandbox builder compiled *Sable Studio* and *Sable Balance* on `@heavy-rain/organization-3d`—a real-time Three.js spatial engineering studio that works out of the box:"**
+> - **"Engineers orbit and compare `SABLE-A`, `SABLE-B`, and `SABLE-C` megacastings in 3D, watching part counts drop from 142 down to 31."**
+> - **"They sweep wheelbase and wall-gauge sliders live, explode the 5 lower-chassis subassemblies along axial vectors, and animate 18,000 N·m axle-twist torsion and center-of-gravity axle load shares."**
+> - **"And because an NVH engineer noted in his prompt that beam math must never be mistaken for certified crash FEA, Argon embedded the analytical units and non-claims disclosure right beside the numbers."**
 >
-> *(Orbit the 3D chassis in `Sable Studio` and sweep the Exploded View & Gauge sliders)*
-> **"At AUGI, Body-in-White architects like Lukas and dynamics engineers like Hannah were pasting closed-box torsion equations, wheelbase stretches, and aluminum-to-boron wall gauges into Claude and Gemini every week. And what did chat give them back? Flat 1D text tables that forced engineers to mentally imagine how a 20-millimeter track change affects a 3D skateboard chassis!"**
->
-> **"When Talos clusters those 9 engineering workflows, it recognizes that a table is the wrong modality. So our sandbox builder compiles *Sable Studio* on `@heavy-rain/organization-3d`—a full interactive Three.js spatial engineering workbench:"**
-> - **"Engineers can compare `SABLE-A`, `SABLE-B`, and `SABLE-C` megacastings side-by-side in real 3D space, watching part counts drop from 142 parts down to 31."**
-> - **"They can sweep wheelbase and rocker wall gauge sliders in real time, explode the 5 lower-chassis subassemblies along axial vectors, and animate 18,000 Newton-meter axle-twist torsion and vertical bending load cases."**
-> - **"And because Viktor in NVH warned in his prompt that concept beam math must never be confused with certified Nastran crash FEA, Talos automatically embeds the exact analytical units and scope limits right beside the numbers—while routing materials engineers who ask about boron-steel rivets straight to AUGI's existing *BIW Joining Registry* instead of letting chat hallucinate unsafe fasteners."**
->
-> **"Whether you're an investor like Marcus scrambling before a founder call, or a chassis engineer at AUGI balancing an 800V SUV—you don't need to be a software developer, and you don't need more AI slop. You just do your work, and Heavy Rain & Talos build the exact enterprise software your team actually needs. Thank you!"**
+> **"We are entering the Era of Personal SaaS. People shouldn't have to be software engineers—or settle for brittle vibe-coded slop—to get world-class tools. By capturing the thoughts workers are already writing in AI and pairing them with an autonomous Argon software engineer, Heavy Rain builds high-value software that actually works. Thank you!"**
