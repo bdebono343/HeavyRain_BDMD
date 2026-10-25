@@ -7,12 +7,84 @@ from .mock_org_data import get_persona_by_id, PERSONAS
 
 load_dotenv()
 
+DISCERNMENT_MATRIX: List[Dict[str, Any]] = [
+    {
+        "scenario_id": "honeymoon_airbnb",
+        "tier": 1,
+        "category": "PERSONAL_PRIVATE_LIFE",
+        "title": "Text from Fiancée + Browsing Airbnb for October Honeymoon",
+        "observed_sequence": "iMessage from Fiancée ('Look at this Amalfi villa for our honeymoon!') -> Chrome: Airbnb.com & Delta Flights",
+        "user_relevance_score": 0,
+        "org_impact_score": 0,
+        "downstream_artifact_detected": False,
+        "agent_decision": "AUTO_PURGED_ON_DEVICE",
+        "verdict_badge": "🔒 AUTO-PURGED ON DEVICE (ZERO TOOL BUILT)",
+        "rationale": (
+            "On-Device Privacy Shield: Local classifier detects personal relationship messaging and consumer travel browsing "
+            "with zero link to Meridian Crest CRM entities or financial models. Purged in local RAM; never logged to server."
+        ),
+        "org_governance_routing": "Blocked at Local Privacy Gate — COO & Org never see personal browsing.",
+    },
+    {
+        "scenario_id": "news_drama",
+        "tier": 2,
+        "category": "CASUAL_NON_WORK_BROWSING",
+        "title": "Morning News Browsing — Celebrity/Tech Drama & Sports Scores",
+        "observed_sequence": "Chrome: X Trending CEO Drama threads -> WSJ Lifestyle -> ESPN NBA Box Scores (Tab closed with zero copy/paste)",
+        "user_relevance_score": 8,
+        "org_impact_score": 2,
+        "downstream_artifact_detected": False,
+        "agent_decision": "IGNORED_AS_NOISE",
+        "verdict_badge": "🔇 IGNORED AS NOISE (BELOW BUILD THRESHOLD)",
+        "rationale": (
+            "Passive Reading Filter: Although performed on the work browser, HeavyRain observes zero downstream work artifacts "
+            "(no clipboard copy, no Affinity CRM lookup, no thesis note). Scored 8/100 and ignored to prevent low-value toy apps."
+        ),
+        "org_governance_routing": "Filtered out of weekly synthesis so users are never spammed with clutter.",
+    },
+    {
+        "scenario_id": "news_deal_signal",
+        "tier": 3,
+        "category": "WORK_RELEVANT_INDIVIDUAL_TASK",
+        "title": "Morning News — Spotting Sector Funding & Flagging Deal to CRM",
+        "observed_sequence": "Chrome: TechCrunch ('DockFlow Raises $19M Series A') -> Copies company & founder -> Pastes into Affinity CRM Watchlist & #deal-flow-sourcing",
+        "user_relevance_score": 78,
+        "org_impact_score": 34,
+        "downstream_artifact_detected": True,
+        "agent_decision": "PERSONAL_MICRO_SKILL_ONLY",
+        "verdict_badge": "👤 BUILD PERSONAL MICRO-SKILL ONLY (NOT PUSHED FIRM-WIDE)",
+        "rationale": (
+            "Downstream Intent Detected: Unlike passive news reading, the user copies a sector funding target directly into Affinity CRM. "
+            "High individual relevance (78/100) for Marcus's deal sourcing, but low multi-team overlap (34/100)—so HeavyRain builds a lightweight "
+            "1-click 'Flag Deal to Affinity' browser clipper for Marcus without pushing a heavy firm-wide app."
+        ),
+        "org_governance_routing": "Kept at Individual User Tier (Org Impact: 34/100) — Not pushed to Diligence or IR teams.",
+    },
+    {
+        "scenario_id": "precall_org_mvp",
+        "tier": 4,
+        "category": "HIGH_ROI_MULTI_TEAM_WORKFLOW",
+        "title": "15m Pre-Call Scramble + Granola Call -> Gemini Recap -> CRM & Thesis Matrix",
+        "observed_sequence": "Outlook 15m Alert -> Affinity CRM -> Claude Pre-Call Skill -> Zoom + Granola Transcript -> Gemini Polisher -> Excel Thesis Matrix & Slack",
+        "user_relevance_score": 98,
+        "org_impact_score": 95,
+        "downstream_artifact_detected": True,
+        "agent_decision": "PROMOTED_TO_FIRM_WIDE_MVP",
+        "verdict_badge": "🚀 PROMOTED TO FIRM-WIDE GOVERNED MVP (DEALPULSE + DISCOVERYOS)",
+        "rationale": (
+            "Dual-Mandate Winner: Scores 98/100 on User Relevance (saves 9.2 hrs/wk of frantic Human Glue copy-pasting across 3 AI silos) "
+            "and 95/100 on Org-Wide Impact (68% shared workflow DNA between Marcus in Deal Sourcing and Elena in Customer Discovery)."
+        ),
+        "org_governance_routing": "Promoted to SOC2-Governed Firm-Wide MVP Registry by COO (Claire Sterling).",
+    },
+]
+
 
 class HeavyRainAgentEngine:
     """
     Core Gemini 4 Argon Agent Engine for HeavyRain.
     Designed as the clean Python handoff layer where Dom's background observation,
-    workflow clustering, org deduplication, and weekly MVP builder plug in.
+    signal-vs-noise discernment, workflow clustering, org deduplication, and weekly MVP builder plug in.
     """
 
     def __init__(self):
@@ -38,6 +110,74 @@ class HeavyRainAgentEngine:
         except Exception as e:
             print(f"[HeavyRainAgentEngine] Gemini call fallback triggered: {e}")
             return None
+
+    def discern_signal_vs_noise(
+        self,
+        persona_id: str = "marcus",
+        scenario_id: Optional[str] = "news_deal_signal",
+        observed_sequence: Optional[str] = None,
+        use_live_gemini: bool = True,
+    ) -> Dict[str, Any]:
+        persona = get_persona_by_id(persona_id)
+        matched = next((item for item in DISCERNMENT_MATRIX if item["scenario_id"] == scenario_id), None)
+
+        if not matched and observed_sequence:
+            seq_lower = observed_sequence.lower()
+            if any(k in seq_lower for k in ["airbnb", "honeymoon", "fiance", "fiancée", "imessage", "flight"]):
+                matched = DISCERNMENT_MATRIX[0]
+            elif any(k in seq_lower for k in ["drama", "espn", "nba", "sports", "celebrity"]):
+                matched = DISCERNMENT_MATRIX[1]
+            elif any(k in seq_lower for k in ["techcrunch", "funding", "series a", "watchlist", "flag deal"]):
+                matched = DISCERNMENT_MATRIX[2]
+            else:
+                matched = DISCERNMENT_MATRIX[3]
+
+        if not matched:
+            matched = DISCERNMENT_MATRIX[2]
+
+        seq_to_analyze = observed_sequence or matched["observed_sequence"]
+        live_rationale = None
+        if use_live_gemini:
+            sys_prompt = (
+                "You are HeavyRain's On-Device Signal vs. Noise Discernment & Dual-Mandate Stack-Ranker powered by Gemini 4 Argon. "
+                "Evaluate the observed desktop sequence along two axes: "
+                "(1) Individual User Relevance (0-100) based on downstream work artifacts (e.g., copying into Affinity CRM, Excel, or IC memos vs. personal life or passive reading), and "
+                "(2) Firm-Wide Org Impact (0-100) based on multi-team workflow overlap and ROI. "
+                "In 3 crisp bullets: state the Privacy/Signal classification, explain why downstream intent matters (especially for news browsing vs. deal flagging), "
+                "and give the final routing decision (Auto-Purge on Device, Ignore as Noise, Build Personal Micro-Skill Only, or Promote to Firm-Wide Governed MVP)."
+            )
+            user_prompt = (
+                f"Persona: {persona.name} ({persona.role})\n"
+                f"Observed Desktop Sequence: {seq_to_analyze}\n"
+                f"Baseline Scores: User Relevance={matched['user_relevance_score']}/100, Org Impact={matched['org_impact_score']}/100, "
+                f"Decision={matched['agent_decision']}"
+            )
+            live_rationale = self._call_gemini(sys_prompt, user_prompt)
+
+        return {
+            "persona_id": persona.id,
+            "persona_name": persona.name,
+            "model_used": self.model_name if live_rationale else f"{self.model_name} (Deterministic Blueprint)",
+            "live_gemini_active": bool(live_rationale),
+            "scenario_id": matched["scenario_id"],
+            "tier": matched["tier"],
+            "category": matched["category"],
+            "title": matched["title"],
+            "observed_sequence": seq_to_analyze,
+            "user_relevance_score": matched["user_relevance_score"],
+            "org_impact_score": matched["org_impact_score"],
+            "downstream_artifact_detected": matched["downstream_artifact_detected"],
+            "agent_decision": matched["agent_decision"],
+            "verdict_badge": matched["verdict_badge"],
+            "org_governance_routing": matched["org_governance_routing"],
+            "live_gemini_discernment_rationale": live_rationale or matched["rationale"],
+            "all_tiers_reference": DISCERNMENT_MATRIX,
+            "dom_pipeline_hook": {
+                "module": "backend.agent_engine.HeavyRainAgentEngine.discern_signal_vs_noise",
+                "stage_id": "stage_1b_signal_vs_noise_discernment",
+                "endpoint": "POST /api/discern-signal",
+            },
+        }
 
     def synthesize_weekly_workflow(
         self, persona_id: str, custom_logs: Optional[List[str]] = None, use_live_gemini: bool = True

@@ -1,67 +1,50 @@
-# HeavyRain — Defense, QA & 1:00 PM Readiness Report
+# HeavyRain — Defense, QA & 1:00 PM Readiness Report (V2 Updated)
 
 **Prepared by:** `LB1` (Linebacker — Defense, QA, API Verification & Security Audit)  
 **Session ID:** `22b64bdf-18d5-4669-bf71-6e3754b6fc5c`  
-**Coordinated With:** `QB1` (`aa91140e-1309-401f-afc9-4d68a2abbe48`) & `RB1` (`ed0c9c47-3e04-4158-9836-92381dd7561c`)  
+**Active 4-Session Team Roster:**
+- **`QB1` (`aa91140e-1309-401f-afc9-4d68a2abbe48`)**: Quarterback / Main Coordinator — Core FastAPI Backend (`backend/*.py`) & V2 Interactive React Frontend (`frontend/src/App.jsx`).
+- **`RB1` (`ed0c9c47-3e04-4158-9836-92381dd7561c`)**: Running Back — 1:00 PM Dom Playbook (`docs/DEMO_PLAYBOOK_1PM_DOM.md`), Pipeline Spec (`workflows/dom_agent_pipeline_spec.json`), & Live Team War Room (`team_comms_server.py` / `team_war_room.html` on `:8090`).
+- **`LB1` (`22b64bdf-18d5-4669-bf71-6e3754b6fc5c`)**: Linebacker — Defense, QA, API Verification, UX Audit & Security Check (`docs/QA_AND_READINESS_REPORT.md`).
+- **`WR1` (`9b072985-bbe1-4a84-bc59-32fdc4ba8032`)**: Wide Receiver — Institutional Simulation Specialist (`frontend/src/InstitutionalSimulator.jsx`).
+
 **Status:** **GREEN / 100% READY FOR 1:00 PM WALKTHROUGH WITH DOM**
 
 ---
 
-## 1. Constant Live Chrome Preview Verification
+## 1. Constant Live Chrome Preview & War Room Endpoints
 
-Per user request, three continuous live preview channels have been verified active and responsive in Chrome:
-
-| Preview Channel | URL / File Path | Status | Verification Notes |
+| Service / Monitor | URL / File Path | Status | Verification Notes |
 | :--- | :--- | :--- | :--- |
-| **1. Standalone HTML Monitor** | `C:\Users\betam\Documents\HeavyRain\live_preview.html` | **ACTIVE (Verified)** | Includes 4-second live `/api/health` heartbeat indicator + 1-click view switcher (*Full Platform*, *Dual-Tab Side-by-Side Workspace + Agent Brain*, *COO/Exec View*, and *Dom's Backend Contract*). |
-| **2. Vite Hot-Reload Frontend** | `http://localhost:5173` | **HTTP 200 OK** | Persistent daemon running on port `5173` (`PID 6768`), proxying `/api/*` to `http://127.0.0.1:8000`. |
-| **3. Unified FastAPI + SPA Server** | `http://127.0.0.1:8000` | **HTTP 200 OK** | Persistent daemon running on port `8000` (`PID 15140`), serving both REST API endpoints and static SPA build. |
+| **1. Vite Hot-Reload Frontend (V2)** | `http://localhost:5173` | **HTTP 200 OK** | Persistent daemon (`PID 6768`), proxying `/api/*` to `http://127.0.0.1:8000`. |
+| **2. Unified FastAPI + SPA Server** | `http://127.0.0.1:8000` | **HTTP 200 OK** | Persistent daemon (`PID 15140`), serving both `/api/*` and built static SPA from `frontend/dist`. |
+| **3. Standalone HTML Preview Monitor** | `C:\Users\betam\Documents\HeavyRain\live_preview.html` | **ACTIVE** | 4-second live `/api/health` heartbeat + 1-click switcher (*Full Platform*, *Dual-Tab Side-by-Side*, *COO/Exec View*, *Dom's Backend Contract*). |
+| **4. Multi-Agent Team War Room** | `http://127.0.0.1:8090` (`team_war_room.html`) | **ACTIVE** | Live Microsoft Teams-style inter-agent comms monitor showing real-time messages across all active sessions. |
 
 ---
 
-## 2. Codebase & Architecture QA Audit
+## 2. V2 Frontend (`frontend/src/App.jsx` — 2,695 Lines) QA Verification
 
-### Backend (`backend/`)
-- **`backend/models.py`**: All 10 Pydantic v2 models (`SubtaskNode`, `WorkspaceMessage`, `BetaTelemetryItem`, `BuiltMvpSpec`, `OrgDedupMatch`, `PersonaProfile`, `ObserveEventRequest`, `SynthesizeWeeklyRequest`, `OrgDedupRequest`, `TelemetryIterateRequest`) validated with zero schema or type issues.
-- **`backend/mock_org_data.py`**: Verified all 5 Meridian Crest Capital personas:
-  1. **Marcus Vance** (*VP, Deal Sourcing & Screening*) — `DealPulse AutoBrief & Post-Call Loop (v1.2)` | 68% DNA overlap with Elena.
-  2. **Elena Rostova** (*Principal, Thesis & Customer Discovery*) — `DiscoveryOS: Persona Scorer & Call Matrix (v1.1)` | Forked from Marcus's core call engine.
-  3. **Devon Brooks** (*Senior Associate, Financial Diligence & Modeling*) — `CIM-to-IC Model Bridge & Live KPI Feed (v1.1)` | 62% DNA overlap with Priya.
-  4. **Priya Nair** (*VP, Investor Relations & Capital Formation*) — `LP Instant Desk (v1.0)` | Connected directly to Devon's verified KPI store.
-  5. **Claire Sterling** (*COO & Managing Partner*) — `Meridian Firm-Wide Agent Mesh & Governance Hub (v2.0)` | Executive ROI & SOC2 governance view.
-- **`backend/agent_engine.py`**:
-  - Properly initializes `google.genai.Client` using `GOOGLE_API_KEY` / `GEMINI_API_KEY` from `.env` and targets `gemini-4-argon` via `client.interactions.create(...)`.
-  - Includes deterministic, zero-latency fallback blueprints so live demos never fail if network/API latency spikes during the 1:00 PM walkthrough.
-- **`backend/app.py`**:
-  - CORS middleware enabled for cross-origin / `file://` HTML monitor requests.
-  - Real-time `LIVE_DEMO_STATE` ring buffer (`max=30` events) verified.
-
-### Frontend (`frontend/src/App.jsx`)
-- **Dual-Tab Real-Time Sync**: Verified `BroadcastChannel('heavyrain_demo_sync')` + `/api/live-state/sync` state synchronization across `?tab=workspace`, `?tab=agent`, `?tab=split`, `?tab=exec`, and `?tab=dom`.
-- **"Human Glue" vs. Disconnected AI Silos**: Clearly highlights steps where personas already use Claude, Gemini, or Granola in silos (`uses_ai_already=True`) alongside manual copy-paste bottlenecks (`is_human_glue=True`).
-- **Week 1 -> Week 2 Beta Telemetry Loop**: Interactive MVP testing mode allows clicking adopted, ignored, and manually overridden features to inspect Week 2 agent mutations.
+1. **Interactive Persona Desktop & OS Clipboard Simulator (`PersonaWorkspacePane`)**:
+   - Features an interactive **Active Desktop Windows** dock, live **OS Clipboard Buffer** with copy-paste handoff flash, **Monday 8:00 AM Agent Drop** ambient notification overlay, and inline **Cross-Org Workflow DNA Match** comparison modal.
+2. **Real Working Finance Mini-Apps (`InteractiveMvpBetaWorkspace`)**:
+   - **Marcus Vance (`DealPulse AutoBrief`)**: T-20m Pre-Call HUD with pinnable screening questions, pruned v1.0 Public Comp Ticker toggle (`0% usage`), editable *Top 3 Diligence Risks* block, and 1-click Deal Team email + Affinity sync.
+   - **Elena Rostova (`DiscoveryOS`)**: Interactive 24-profile Batch Candidate Persona Ranker with filter tabs (`All`, `Budget Holder`, `Disqualified`) + Multi-Call Thesis Matrix with live editable *Veto Holder* column.
+   - **Devon Brooks (`CIM-to-IC Model Bridge`)**: Interactive PDF Page 47 Adjusted EBITDA Bridge with clickable *Footnote 4: Capitalized Software R&D* red-flag toggle + read-only verified KPI stream to Priya.
+   - **Priya Nair (`LP Instant Desk`)**: Live CalSTRS urgent LP inquiry responder pulling verified Q3 ARR/NDR directly from Devon's bridge with SEC Marketing Rule Gross/Net IRR disclosure toggle.
+   - **Live Gemini 4 Argon v1.3 Self-Mutation**: Clicking **"Synthesize v1.3 Mutation →"** sends the live beta telemetry log to `POST /api/telemetry-iterate` and renders the next-week mutation plan.
+3. **Signal vs. Noise Discernment & Dual-Mandate Stack-Ranker (`SignalVsNoiseDiscernmentCenter` — `?tab=discernment`)**:
+   - Interactive 4-scenario comparison with **User Relevance Score** and **Org-Wide Impact Score** meters:
+     1. *Fiancée Text + Airbnb Honeymoon Browsing* → **0% User / 0% Org** (`🔒 Auto-Purged on Device — Privacy Gate`)
+     2. *Morning News — Celebrity/Tech Drama & Sports* → **8% User / 2% Org** (`🔇 Ignored as Noise — Zero Downstream Artifacts`)
+     3. *Morning News — Spotting Sector Funding & Flagging to CRM* → **78% User / 34% Org** (`👤 Build Personal Micro-Skill Only`)
+     4. *15m Pre-Call Scramble + Granola -> Gemini -> CRM/Thesis Matrix* → **98% User / 95% Org** (`🚀 Promoted to Firm-Wide Governed MVP`)
 
 ---
 
-## 3. Live API Endpoint Health Check Results
+## 3. Backend API & Security Verification
 
-All FastAPI endpoints were tested against `http://127.0.0.1:8000`:
-
-- `GET /api/health` → `200 OK`
-  ```json
-  {"status":"ok","service":"HeavyRain Agent Backend","model":"gemini-4-argon","gemini_key_configured":true}
-  ```
-- `GET /api/org` → `200 OK` (`5` personas loaded, `org_name: "Meridian Crest Capital"`, `annualized_roi_usd: 274000`)
-- `POST /api/observe` → `200 OK` (`status: "captured"`, event prepended to `events_stream`)
-- `POST /api/synthesize-weekly` → `200 OK` (Returns `DealPulse AutoBrief & Post-Call Loop` spec + `dom_pipeline_hook`)
-- `POST /api/org-dedup` → `200 OK` (Returns `68%` overlap match between Elena and Marcus, saving `28` build hours)
-- `POST /api/telemetry-iterate` → `200 OK` (Returns `v1.3-beta (Auto-Mutated)` changelog and telemetry breakdown)
-
----
-
-## 4. Git & Security Audit
-
-- **`.gitignore` Verification**:
-  - `.env` is matched by `.gitignore` line 2 (`.env`) — confirmed via `git check-ignore -v .env`.
-  - `frontend/node_modules` is matched by `.gitignore` line 7 (`node_modules/`) — confirmed via `git check-ignore -v frontend/node_modules`.
-- **Secrets Protection**: `GOOGLE_API_KEY` is loaded exclusively via `os.getenv` in `backend/agent_engine.py` and is never exposed in any frontend bundle or API payload (only boolean `gemini_key_configured: true` is returned by `/api/health`).
+- `GET /api/health` → `200 OK` (`{"status":"ok","service":"HeavyRain Agent Backend","model":"gemini-4-argon","gemini_key_configured":true}`)
+- `GET /api/org` → `200 OK` (5 Meridian Crest Capital personas + `LIVE_DEMO_STATE`)
+- `POST /api/observe`, `POST /api/synthesize-weekly`, `POST /api/org-dedup`, `POST /api/telemetry-iterate` → All `200 OK`
+- **Git & Secrets Protection**: `.env` and `frontend/node_modules/` verified ignored via `.gitignore` (`git check-ignore -v`).

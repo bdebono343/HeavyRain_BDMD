@@ -13,6 +13,11 @@ __pycache__/
 venv/
 .venv/
 
+# Local Agent Tooling & War Room
+.agents/
+team_comms_server.py
+team_war_room.html
+
 # IDE / System
 .vscode/
 .idea/

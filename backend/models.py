@@ -98,6 +98,13 @@ class ObserveEventRequest(BaseModel):
     used_ai_tool: bool = False
 
 
+class SignalDiscernmentRequest(BaseModel):
+    persona_id: str = "marcus"
+    scenario_id: Optional[str] = "news_deal_signal"
+    observed_sequence: Optional[str] = None
+    use_live_gemini: bool = True
+
+
 class SynthesizeWeeklyRequest(BaseModel):
     persona_id: str
     custom_workflow_logs: Optional[List[str]] = None

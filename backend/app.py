@@ -8,17 +8,18 @@ from fastapi.responses import FileResponse
 
 from .models import (
     ObserveEventRequest,
+    SignalDiscernmentRequest,
     SynthesizeWeeklyRequest,
     OrgDedupRequest,
     TelemetryIterateRequest,
 )
 from .mock_org_data import ORG_METADATA, PERSONAS, get_persona_by_id
-from .agent_engine import HeavyRainAgentEngine
+from .agent_engine import HeavyRainAgentEngine, DISCERNMENT_MATRIX
 
 app = FastAPI(
     title="HeavyRain Workflow Agent Infrastructure API",
     description="Backend API & Gemini 4 Argon Agent Engine for HeavyRain (Dom + Frontend Integration Contract)",
-    version="1.2.0",
+    version="1.3.0",
 )
 
 app.add_middleware(
@@ -56,6 +57,7 @@ def health_check():
     return {
         "status": "ok",
         "service": "HeavyRain Agent Backend",
+        "version": "1.3.0",
         "model": engine.model_name,
         "gemini_key_configured": bool(engine.client),
     }
@@ -66,7 +68,23 @@ def get_org_overview():
     return {
         "org": ORG_METADATA,
         "personas": [p.model_dump() for p in PERSONAS],
+        "discernment_examples": DISCERNMENT_MATRIX,
         "live_state": LIVE_DEMO_STATE,
+    }
+
+
+@app.get("/api/discernment-matrix")
+def get_discernment_matrix():
+    """
+    Returns the 4-tier Signal vs. Noise & Dual-Mandate Stack-Ranking decision matrix
+    (Personal Privacy Shield, Passive News Noise, Individual Deal-Flagging Micro-Skill, and Firm-Wide Governed MVP).
+    """
+    return {
+        "tiers": DISCERNMENT_MATRIX,
+        "scoring_axes": {
+            "axis_1": "user_relevance_score (0-100): Downstream work artifact handoffs, repetition, and weekly time saved",
+            "axis_2": "org_impact_score (0-100): Cross-team workflow DNA overlap, AUM velocity, and SOC2 governance value",
+        },
     }
 
 
@@ -118,6 +136,21 @@ def ingest_observation_event(req: ObserveEventRequest):
     }
 
 
+@app.post("/api/discern-signal")
+def discern_signal_vs_noise(req: SignalDiscernmentRequest):
+    """
+    Dom's Endpoint #1B: On-Device Privacy Filter, Signal vs. Noise Classifier & Dual-Mandate Stack-Ranker.
+    Evaluates an observed desktop sequence on User Relevance (0-100) and Org-Wide Impact (0-100)
+    to decide whether to Auto-Purge on Device, Ignore as Noise, Build a Personal Micro-Skill, or Promote to a Firm-Wide MVP.
+    """
+    return engine.discern_signal_vs_noise(
+        persona_id=req.persona_id,
+        scenario_id=req.scenario_id,
+        observed_sequence=req.observed_sequence,
+        use_live_gemini=req.use_live_gemini,
+    )
+
+
 @app.post("/api/synthesize-weekly")
 def synthesize_weekly(req: SynthesizeWeeklyRequest):
     """
@@ -166,4 +199,3 @@ if FRONTEND_DIST.exists():
     @app.get("/")
     def serve_spa_root():
         return FileResponse(str(FRONTEND_DIST / "index.html"))
-

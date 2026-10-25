@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "spec_version": "1.2.0",
+  "spec_version": "1.3.0",
   "system_name": "HeavyRain Autonomous Workflow Agent Pipeline",
   "organization": "Meridian Crest Capital",
   "model_engine": {
@@ -13,6 +13,7 @@
   "live_servers": {
     "fastapi_backend": "http://127.0.0.1:8000",
     "vite_frontend": "http://localhost:5173",
+    "agent_teams_war_room": "http://127.0.0.1:8090",
     "standalone_html_preview": "live_preview.html",
     "dual_tab_sync_channel": "heavyrain_demo_sync"
   },
@@ -28,7 +29,7 @@
         "persona_id": "string ('marcus' | 'elena' | 'devon' | 'priya' | 'claire')",
         "app_name": "string (e.g., 'Outlook Calendar', 'Claude 3.7 Web (Skill)', 'Granola Call Recorder', 'Excel')",
         "window_title": "string",
-        "action_type": "string ('TRIGGER_DETECTED' | 'DISCONNECTED_AI_SILO' | 'HUMAN_GLUE_HANDOFF' | 'WORKFLOW_STEP')",
+        "action_type": "string ('TRIGGER_DETECTED' | 'DISCONNECTED_AI_SILO' | 'HUMAN_GLUE_HANDOFF' | 'WORKFLOW_STEP' | 'PERSONAL_NOISE_FILTERED')",
         "content_snippet": "string (redacted/governed metadata preview)",
         "used_ai_tool": "boolean"
       },
@@ -46,6 +47,52 @@
         },
         "total_buffered_events": "integer"
       }
+    },
+    {
+      "stage_id": "stage_1b_signal_vs_noise_discernment",
+      "name": "On-Device Privacy Filter, Signal vs. Noise Classifier & Dual-Level Stack Ranker",
+      "owner": "Dom (Privacy & Relevance Filter) -> Gemini 4 Argon Classifier",
+      "endpoint": "POST /api/discern-signal & GET /api/discernment-matrix",
+      "backend_handler": "backend.agent_engine.HeavyRainAgentEngine.discern_signal_vs_noise",
+      "description": "Separates personal life and non-work browsing from work workflows on-device, then stack-ranks valid workflows along two axes: (1) Individual User Relevance Score (0-100) and (2) Firm-Wide Org Impact Score (0-100) to decide whether to purge, ignore, build a personal skill, or promote to a firm-wide governed MVP.",
+      "four_tier_decision_matrix": [
+        {
+          "tier": 1,
+          "category": "PERSONAL_PRIVATE_LIFE",
+          "observed_sequence": "iMessage from Fiancée ('Look at this Amalfi villa for our honeymoon!') -> Chrome: Airbnb & Google Flights",
+          "user_work_relevance_pct": 0,
+          "org_impact_score_pct": 0,
+          "agent_decision": "AUTO_PURGED_ON_DEVICE",
+          "explanation": "Privacy Shield: Immediately dropped from local buffer; never logged to server and never triggers an automation build."
+        },
+        {
+          "tier": 2,
+          "category": "CASUAL_NON_WORK_BROWSING",
+          "observed_sequence": "Morning coffee reading: ESPN NBA scores, celebrity/political drama threads on X, general weather",
+          "user_work_relevance_pct": 8,
+          "org_impact_score_pct": 2,
+          "agent_decision": "IGNORED_AS_NOISE",
+          "explanation": "Recognized as routine human reading with zero downstream work artifact or CRM/Excel handoff. No tool built."
+        },
+        {
+          "tier": 3,
+          "category": "WORK_RELEVANT_INDIVIDUAL_TASK",
+          "observed_sequence": "Reading TechCrunch/Bloomberg -> Spots Series B AI infrastructure funding news -> Copies company URL into Affinity CRM 'Watchlist'",
+          "user_work_relevance_pct": 78,
+          "org_impact_score_pct": 34,
+          "agent_decision": "PERSONAL_MICRO_SKILL_ONLY",
+          "explanation": "High individual utility for Marcus when reading sector news, but low multi-team complexity. HeavyRain offers a lightweight 1-click 'Flag Deal to CRM' browser clipper for Marcus without pushing a heavy firm-wide app."
+        },
+        {
+          "tier": 4,
+          "category": "HIGH_ROI_MULTI_TEAM_WORKFLOW",
+          "observed_sequence": "15-min Pre-Call Scramble (Outlook -> CRM -> Claude -> Granola -> Gemini -> Slack/Excel) & 88-Page PDF CIM to Excel EBITDA Bridge",
+          "user_work_relevance_pct": 98,
+          "org_impact_score_pct": 95,
+          "agent_decision": "PROMOTED_TO_FIRM_WIDE_MVP",
+          "explanation": "High repetition, severe 'Human Glue' friction across AI silos, and 62%-68% workflow overlap across multiple investment teams. Promoted to a SOC2-governed firm-wide MVP."
+        }
+      ]
     },
     {
       "stage_id": "stage_2_weekly_subtask_synthesis",
