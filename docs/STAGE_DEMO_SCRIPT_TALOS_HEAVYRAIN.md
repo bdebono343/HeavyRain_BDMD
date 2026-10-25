@@ -2,7 +2,7 @@
 
 > [!IMPORTANT]
 > **Hackathon North Star: The 3 Things This Pitch Proves**
-> 1. **Prove the Idea (Why This Is the Right Problem)**: Sam Altman called this the **"Era of Personal SaaS"**—just like the Dot-Com era when every business needed a website, today every knowledge worker needs custom software for their workflow. Workers are experts at their craft, not software engineers, and you can't hire a human software engineer for every employee.
+> 1. **Prove the Idea (Why This Is the Right Problem)**: Sam Altman recently said ***"we are entering the fast fashion era of SaaS very soon"***—custom workflow software can now be spun up on demand instead of buying rigid legacy SaaS, *but* like fast fashion in retail, DIY vibe-coding creates disposable "slopware" that falls apart after one wear. Just like the Dot-Com era when every business needed a website even though owners weren't web developers, today every worker needs custom software for their workflow—and you can't hire a human software engineer for every employee. Heavy Rain delivers bespoke workflow speed **without the fast-fashion slop**.
 > 2. **Why Now (Why This Was Impossible 18 Months Ago)**:
 >    - **From Tracking Clicks → Reading Thought Processes**: Old "system supervisor" / RPA tools only saw *mouse clicks* inside rigid legacy apps. Today, work has shifted into **Claude, ChatGPT, and Gemini**, where employees **write down their exact thought process, intent, and logic**.
 >    - **Better Than DIY "Vibe Coding" via Gemini 4 Argon**: An employee vibe-coding alone produces fragile AI slop without API keys, security rules, or continuity. **Gemini 4 Argon** running in an autonomous **Antigravity Sandbox** has *more context than any single employee*—combining their written thoughts with org-wide schemas, pre-wired API connectors, and strict UI/security guardrails.
@@ -21,9 +21,11 @@
 2. Click **`Auto-Play Animated Story`** so the audience sees a worker jumping between Outlook, CRM, Claude, Granola, and Gemini.
 
 ### Spoken Talk Track
-> **"Sam Altman recently said we are entering the *'Era of Personal SaaS'*—a world where software is tailored to the exact workflows of individuals and teams. Think back to the Dot-Com era: every company suddenly needed a website, and people were great at running their business, not hand-coding HTML. Today, we have the exact same bottleneck with internal software: people are deeply technical at their actual jobs, but they aren't software engineers. And you obviously can't hire a dedicated human software engineer to sit next to every single employee—that will never scale."**
+> **"Sam Altman recently said *'we are entering the fast fashion era of SaaS very soon'*—a world where custom software for a specific workflow can be spun up in hours instead of buying rigid, one-size-fits-all SaaS. Think back to the Dot-Com era: every company suddenly needed a website, and people were great at running their business, not hand-coding HTML. Today, we have the exact same bottleneck with internal software: people are deeply technical at their actual jobs, but they aren't software engineers. And you obviously can't hire a dedicated human software engineer to sit next to every single employee—that will never scale."**
 >
-> **"So why hasn't autonomous workflow software worked before, and *why is it suddenly possible right now*? Two massive shifts just converged:"**
+> **"Even worse, just like fast fashion in retail, if employees try to 'vibe-code' their own tools in chat, you get disposable AI slop that falls apart after one wear—no API keys, no security, and zero sustainability."**
+>
+> **"So why hasn't autonomous, sustainable workflow software worked before, and *why is it suddenly possible right now*? Two massive shifts just converged:"**
 >
 > **"First, work has shifted from clicking buttons inside rigid, purpose-built SaaS tools to reasoning inside Claude, ChatGPT, and Gemini. Under the old paradigm, 'system supervisor' tools had to track mouse clicks—and clicks only tell you *where* someone clicked, never *why*. Today, as workers prompt AI assistants across their workflow, they are literally writing down their entire thought process, business logic, and intent in plain English."**
 >
@@ -111,4 +113,4 @@
 > - **"They sweep wheelbase and wall-gauge sliders live, explode the 5 lower-chassis subassemblies along axial vectors, and animate 18,000 N·m axle-twist torsion and center-of-gravity axle load shares."**
 > - **"And because an NVH engineer noted in his prompt that beam math must never be mistaken for certified crash FEA, Argon embedded the analytical units and non-claims disclosure right beside the numbers."**
 >
-> **"We are entering the Era of Personal SaaS. People shouldn't have to be software engineers—or settle for brittle vibe-coded slop—to get world-class tools. By capturing the thoughts workers are already writing in AI and pairing them with an autonomous Argon software engineer, Heavy Rain builds high-value software that actually works. Thank you!"**
+> **"Sam Altman said we're entering the 'fast fashion era of SaaS'—but enterprises don't want disposable fast-fashion slop. People shouldn't have to be software engineers to get world-class, sustainable tools. By capturing the thoughts workers are already writing in AI and pairing them with an autonomous Argon software engineer, Heavy Rain builds high-value software that actually lasts and actually works. Thank you!"**
