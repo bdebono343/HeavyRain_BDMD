@@ -68,6 +68,7 @@ export default function App() {
   // Live Gemini 4 Argon Backend Playground state (for Dom's 1 PM walkthrough)
   const [geminiLoading, setGeminiLoading] = useState(false);
   const [geminiResult, setGeminiResult] = useState(null);
+  const [liveBuildDispatchStatus, setLiveBuildDispatchStatus] = useState(null);
   const [customTelemetryInput, setCustomTelemetryInput] = useState(
     'User clicked Pre-Call HUD 14/14 times, ignored Public Comp Ticker (0 clicks), and manually typed "Key Deal Risks" into 11 post-call emails.'
   );
@@ -254,6 +255,70 @@ export default function App() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  // Dispatch active persona's workflow directly to Dom's Live Antigravity Builder (:43180 -> :43170)
+  const dispatchToDomLiveBuilder = async () => {
+    if (!activePersona || !activePersona.mvp) return;
+    setLiveBuildDispatchStatus('sending');
+    const payload = {
+      orgId: 'meridian',
+      orgName: orgData?.org_name || 'Meridian Crest Capital',
+      persona: {
+        id: activePersona.id,
+        name: activePersona.name,
+        role: activePersona.role,
+        department: activePersona.department || 'Investment Team',
+        scenarioTitle: activePersona.scenario_title,
+        scenarioTriggerBanner: activePersona.scenario_trigger_banner,
+        weeklyHoursSaved: Number(activePersona.weekly_hours_saved || 9.2),
+        annualizedRoi: '$69,000',
+        currentAiToolsUsed: activePersona.current_ai_tools_used || [],
+      },
+      fragmentedWorkflow: (activePersona.fragmented_workflow || []).map((s) => ({
+        id: s.id,
+        stepNumber: s.step_number,
+        app: s.app,
+        windowTitle: s.action_title,
+        durationMins: s.duration_mins,
+        usesAiAlready: Boolean(s.uses_ai_already),
+        isHumanGlue: Boolean(s.is_human_glue),
+        detail: s.detail,
+        rawPayloadPreview: s.raw_payload_preview || s.detail,
+      })),
+      mvp: {
+        mvpId: activePersona.mvp.mvp_id,
+        name: activePersona.mvp.name,
+        tagline: activePersona.mvp.tagline,
+        version: activePersona.mvp.version || 'v1.0-beta',
+        triggerRule: activePersona.mvp.trigger_rule || '',
+        beforeTimeMins: Number(activePersona.mvp.before_time_mins || 42),
+        afterTimeSeconds: Number(activePersona.mvp.after_time_seconds || 90),
+        whyThisMatters: activePersona.mvp.why_this_matters || '',
+        features: (activePersona.mvp.features || []).map((f) => ({
+          id: f.id,
+          title: f.title,
+          status: f.status || 'active',
+          description: f.description || '',
+        })),
+        securityGovernance: activePersona.mvp.security_governance || [],
+      },
+    };
+
+    try {
+      const res = await fetch('http://127.0.0.1:43180/api/v1/orgs/meridian/builds/live', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setLiveBuildDispatchStatus('sent');
+      setTimeout(() => setLiveBuildDispatchStatus(null), 5000);
+    } catch (err) {
+      console.warn('Direct POST to Dom Relay (:43180) failed:', err);
+      setLiveBuildDispatchStatus('error');
+      setTimeout(() => setLiveBuildDispatchStatus(null), 4000);
+    }
+  };
+
   // Trigger Dom's Backend Endpoints (Gemini 4 Argon)
   const triggerBackendEndpoint = async (endpointType, customTelemetryOverride = null) => {
     if (!activePersona) return;
@@ -419,15 +484,37 @@ export default function App() {
             </button>
           </div>
 
-          {/* Dual Chrome Tab Launcher */}
-          <button
-            onClick={openSecondChromeTab}
-            title="Opens HeavyRain Agent Brain in a 2nd Chrome Tab synced live with this Persona Desktop!"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 text-xs font-medium transition cursor-pointer"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            Pop Out 2nd Synced Tab
-          </button>
+          {/* Live Handoff to Dom's Console (:43170 / :43180) + Dual Chrome Tab Launcher */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={dispatchToDomLiveBuilder}
+              title="POSTs Marcus Vance's LiveBuildRequest to Dom's Relay (http://127.0.0.1:43180/api/v1/orgs/meridian/builds/live) so Dom's :43170 console wakes up from 'Waiting for work' automatically!"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                liveBuildDispatchStatus === 'sent'
+                  ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-lg shadow-emerald-500/20'
+                  : liveBuildDispatchStatus === 'error'
+                  ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                  : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/40'
+              }`}
+            >
+              <Send className="w-3.5 h-3.5" />
+              {liveBuildDispatchStatus === 'sending'
+                ? 'Sending to Dom (:43180)...'
+                : liveBuildDispatchStatus === 'sent'
+                ? '✓ Sent to Dom’s Live Builder (:43170)!'
+                : liveBuildDispatchStatus === 'error'
+                ? 'Relay :43180 Offline (Use ⋯ → Start on :43170)'
+                : 'Send to Dom’s Live Builder (:43170)'}
+            </button>
+            <button
+              onClick={openSecondChromeTab}
+              title="Opens HeavyRain Agent Brain in a 2nd Chrome Tab synced live with this Persona Desktop!"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 text-xs font-medium transition cursor-pointer"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              Pop Out 2nd Synced Tab
+            </button>
+          </div>
         </div>
 
         {/* 5 PERSONAS BAR ("TAKE OVER WORKSPACE") */}
